@@ -1,0 +1,299 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;600;800&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css"/>
+	<link rel="stylesheet" href="{%static 'css/index_style.css'%}">
+
+	<title>MySelf</title>
+</head>
+<body>
+	<div
+			style="background: url('{% static 'img/index_page/Index_page_background.jpg'%}');
+	 			height: 100vh; background-size: cover;" class="main_page-block"
+	>
+		<div>
+			<a href="#">
+				<img class="logo" src="{%static 'img/index_page/logo.svg'%}" alt="">
+			</a>
+		</div>
+		<nav class="first_main_page_nav">
+			<a href="#"><img src="{% static 'img/index_page/first_nav_serch.svg'%}" alt=""></a>
+			<a href="#"><img src="{% static 'img/index_page/first_nav_heart.svg'%}" alt=""></a>
+			<a href="#"><img src="{% static 'img/index_page/first_nav_person.svg'%}" alt=""></a>
+		</nav>
+		<nav class="second_main_page_nav">
+			<a href="">каталог</a>
+			<a href="">сумки</a>
+			<a href="">myself</a>
+			<a href="">мужчинам</a>
+			<a href="">женщинам</a>
+		</nav>
+		<div class="new_collection_link">
+			<a href="#">
+				<img src="{% static 'img/index_page/white_arrow.svg' %}" alt="">
+				<span>  НОВАЯ КОЛЛЕКЦИЯ  </span>
+			</a>
+		</div>
+	</div>
+
+
+	<div class="container1">
+		<div class="choose_your_style-block">
+			<span>
+				ВЫБЕРИ СВОЙ СТИЛЬ
+			</span>
+			<span>
+				электронные сертификаты на любую сумму
+			</span>
+			<span>
+				<a href="#">
+					выбрать
+				</a>
+			</span>
+		</div>
+
+		<div class="new_collection-block">
+
+			<span class="new_collection_span">НОВАЯ КОЛЛЕКЦИЯ</span>
+			<a href="#">ПОСМОТРЕТЬ КОЛЛЕКЦИЮ</a>
+
+			<div class="for_he-for_she-block">
+
+				<div class="for_she">
+					<span>ДЛЯ НЕЁ</span>
+					<a href="">КУПИТЬ СЕЙЧАС</a>
+					<img src="{% static 'img/index_page/black_arrow.svg' %}" alt="">
+					<div>СВИТЕР ОТ 1799 ₽</div>
+				</div>
+				<div class="for_he">
+					<span>ДЛЯ НЕГО</span>
+					<a href="">КУПИТЬ СЕЙЧАС</a>
+					<img src="{% static 'img/index_page/gold_arrow.svg' %}" alt="">
+					<div>ДЖИНСЫ  ОТ 1899 ₽</div>
+				</div>
+
+			</div>
+
+		</div>
+
+
+
+		<div class="image-slider1 swiper-container">
+			<div class="image-slider_wraper1 swiper-wrapper">
+
+				<div class="image-slider_slide1 swiper-slide">
+					<div class="image-slider_image1">
+						<img src="{%static 'img/index_page/slide3.svg'%}" alt="">
+						<div class="circle"></div>
+					</div>
+				</div>
+
+				<div class="image-slider_slide1 swiper-slide">
+					<div class="image-slider_image1">
+						<img src="{% static 'img/index_page/slide2.svg'%}" alt="">
+					</div>
+				</div>
+
+				<div class="image-slider_slide1 swiper-slide">
+					<div class="image-slider_image1">
+						<img src="{% static 'img/index_page/slide1.svg'%}" alt="">
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="swiper-next">
+
+		</div>
+		<div style =" width: 4vw;
+					  height: 4vw;
+					  background-image: url('{% static 'img/index_page/button for slider.svg' %}');
+					  position: absolute;
+					  top: calc(110vh + 48vw);
+					  transform: translateY(-50%);
+					  border-radius: 60px;
+					  z-index: 9999;
+					  background-size: cover;"
+
+			 class='swiper-prev1'>
+
+		</div>
+
+		<div class="img1">
+			<img src="{% static 'img/index_page/image23.svg' %}" alt="">
+			<div class="div1">ЧЕРНАЯ ПЯТИЦА</div>
+			<div><span>СКИДКА 30 % </span>ТОЛЬКО ДЛЯ<br>ЗАРЕГИСТРИРОВАННЫХ<br>ПОКУПАТЕЛЕЙ</div>
+			<div>1-28 ФЕВРАЛЯ 2023</div>
+		</div>
+		<div class = "bla-bla"></div>
+
+	</div>
+	<div class="choose_your_own_identity-block">
+		<div class="choose_your_own_identity-text">
+			<div>CHOOSE<br>YOUR <br> OWN <br>IDENTITY</div>
+			<div>НУЖЕН СТИЛЬ, <br>ПОДХОДЯЩИЙ К <br>ПОВСЕДНЕВНЫМ ДЕЛАМ ?<br><br>ПОСМОТРИ ИЗ НАШИХ УЖЕ<br>СОСТАВЛЕННЫХ <br>КОЛЛЕКЦИЙ. </div>
+			<div>
+				<a href="#">посмотреть коллекцию</a>
+				<img src="{% static 'img/index_page/white_arrow.svg'%}" alt="">
+			</div>
+
+		</div>
+		<div class="image-slider2 swiper-container">
+			<div class="image-slider_wraper2 swiper-wrapper">
+
+				<div class="image-slider_slide2 swiper-slide">
+					<div class="image-slider_image2">
+						<img src="{% static 'img/index_page/slider2 slide1.jpg'%}" alt="1">
+					</div>
+				</div>
+
+				<div class="image-slider_slide2 swiper-slide">
+					<div class="image-slider_image2">
+						<img src="{% static 'img/index_page/slide2.svg' %}" alt="2">
+					</div>
+				</div>
+
+				<div class="image-slider_slide2 swiper-slide">
+					<div class="image-slider_image2">
+						<img src="{% static 'img/index_page/slide1.svg' %}" alt="3">
+					</div>
+
+				</div>
+
+			</div>
+		</div>
+
+		<div style="
+		  			width: 4vw;
+					height: 4vw;
+					background-image: url('{% static 'img/index_page/button for slider2.svg'%}');
+					position: absolute;
+					top: calc(30vh + 10vw);
+					left: calc(25vw + 30vh);
+					transform: translateY(-50%);
+					border-radius: 60px;
+					z-index: 9999;
+					background-size: cover;"
+
+			 class="swiper-next"></div>
+		<div class='swiper-prev2'></div>
+
+	</div>
+	<div class="element_of_nature-block">
+			<span>ELEMENT OF NATURE</span>
+			<div>ИЗГОТОВЛЕНО С ИСПОЛЬЗОВАНИЕМ ТОЛЬКО
+				<br>ЛУЧШИХ МАТЕРИАЛОВ.<br>
+				<span>WE ALWAYS KEEP IT REAL.</span>
+			</div>
+
+			<div style="
+				width: 100%;
+				height: 100vh;
+				background-image: url('{% static 'img/index_page/bg_for_element_of_nature-block.jpg' %}');
+				margin-top: -5vw;
+				background-size:cover;"
+		class="img2"></div>
+	</div>
+
+	<div class="info">
+		Стильная женская одежда Myself <br>
+		Бренд MYSELF открывает секрет настоящего стиля. Сочетание утонченного классического стиля и ярких оригинальных деталей <br>позволяет создавать неповторимые образы.<br>
+		Одежда MYSELF для создается как для женщин так и для мужчин - одежда для дома, работы, отдыха с  безупречным и тонким <br>вкусом прекрасного. <br>
+		Интернет магазин женской одежды MYSELF поможет вам выглядеть безупречно в любой ситуации. <br>
+		3 принципа идеального образа от MYSELF: <br>
+		<span class= "у_меня_не_работает_nth_child_1">Классический стиль.</span> <br>
+		<span class= "у_меня_не_работает_nth_child_2">Актуальные детали. Модные тренды.</span> <br>
+		<span class= "у_меня_не_работает_nth_child_3">Доступность.Это недорогая одежда превосходного качества.</span> <br>
+		Мы стремимся сделать моду доступной в каждом уголке России. В нашем интернет-магазине  вы можете оформить заказ за <br>несколько минут, оплатить его удобным способом и заказать доставку в любой город нашей страны. Наша курьерская служба <br>доставляет заказы в срок от 1 дня. <br>
+		Наслаждайтесь покупками, не выходя из дома!
+	</div>
+
+	<div class ="container3">
+
+
+		<div class="info_links">
+				<div class="block__column">
+					<div class="flex_content">
+
+						<div>КАТАЛОГ</div>
+						<div><a href="">EXTRA SALE</a></div>
+						<div><a href="">Новинки</a></div>
+						<div><a href="">Одежда</a></div>
+						<div><a href="">Аксессуары</a></div>
+						<div><a href="">Белье и купальники</a></div>
+						<div><a href="">Выбери свой стиль</a></div>
+						<div><a href="">SALE</a></div>
+
+					</div>
+
+				</div>
+				<div class="block__column">
+					<div class="flex_content">
+
+						<div>ПОМОЩЬ ПОКУПАТЕЛЮ</div>
+						<div><a href="">Доставка и оплата</a></div>
+						<div><a href="">Обмен и возврат</a></div>
+						<div><a href="">Часто задаваемые вопросы</a></div>
+						<div><a href="">Правила программы лояльности</a></div>
+						<div><a href="">Подарочные сертификаты</a></div>
+						<div><a href="">Правила работы сайта</a></div>
+						<div><a href="">Политика конфиденциальности</a></div>
+
+					</div>
+				</div>
+
+				<div class="block__column">
+					<div class="flex_content">
+
+						<div>О КОМПАНИИ</div>
+						<div><a href="">О бренде</a></div>
+						<div><a href="">Работа в бренде MYSELF</a></div>
+						<div><a href="">Сотрудничество</a></div>
+						<div><a href="">Контакты</a></div>
+						<div><a href="">Обратная связь</a></div>
+
+					</div>
+				</div>
+
+				<div class="block__column">
+					<div class="flex_content">
+
+						<div>БЛОГ</div>
+						<div><a href="">Новости и акции</a></div>
+						<div><a href="">Lookbook</a></div>
+					</div>
+				</div>
+
+				<div class="block__column">
+					<div class="flex_content">
+
+						<div>ПРОГРАММА ЛОЯЛЬНОСТИ</div>
+						<div><a href="">Стань участником MYSELF прямо сейчас! Копи <br> бонусы, повышай уровень и получай скидку до <br>50% от стоимости покупки! </a></div>
+
+
+					</div>
+				</div>
+		</div>
+
+	</div>
+
+	<div class="wrapp">
+		<div class="social_network_links">
+			<a href=""><img src="{% static 'img/index_page/VK.svg'%}" alt=""></a>
+			<a href=""><img src="{% static 'img/index_page/telegram.svg' %}" alt=""></a>
+			<a href=""><img src="{% static 'img/index_page/insta.svg' %}" alt=""></a>
+			<a href=""><img src="{% static 'img/index_page/youtube.svg' %}" alt=""></a>
+		</div>
+	</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
+<script src="{% static 'js/index.js'%}"></script>
+</body>
+</html>
