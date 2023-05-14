@@ -22,5 +22,4 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('store.urls', namespace='home')),
     path('user/', include('user.urls', namespace='user')),
-    path('book_certificate', include('store.urls', namespace='book_certificate'))
 ]

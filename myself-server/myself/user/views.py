@@ -1,8 +1,8 @@
 from django.shortcuts import render, HttpResponseRedirect
 from django.contrib import auth
 from django.urls import reverse
-
 from user.forms import *
+from django.contrib.auth import logout as login_out
 
 
 def reg(request):
@@ -47,3 +47,16 @@ def log(request):
     }
 
     return render(request, 'user/log.html', context)
+
+
+def logout(request):
+    login_out(request)
+    return HttpResponseRedirect(reverse('store:home'))
+
+
+def favorite(request):
+    return render(request, 'user/favorite.html')
+
+
+def profile(request):
+    return render(request, 'user/profile.html')

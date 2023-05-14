@@ -24,9 +24,14 @@
 			</a>
 		</div>
 		<nav class="first_main_page_nav">
-			<a href="#"><img src="{% static 'img/index_page/first_nav_serch.svg'%}" alt=""></a>
-			<a href="#"><img src="{% static 'img/index_page/first_nav_heart.svg'%}" alt=""></a>
-			<a href="#"><img src="{% static 'img/index_page/first_nav_person.svg'%}" alt=""></a>
+			<a href="{% url 'store:search' %}"><img src="{% static 'img/index_page/first_nav_search.svg'%}" alt=""></a>
+			{% if request.user.is_authenticated%}
+			<a href="{% url 'user:favorite' %}"><img src="{% static 'img/index_page/first_nav_heart.svg'%}" alt=""></a>
+			<a href="{% url 'user:profile' %}"><img src="{% static 'img/index_page/first_nav_person.svg'%}" alt=""></a>
+			{% else %}
+			<a href="{% url 'user:log' %}"><img src="{% static 'img/index_page/first_nav_heart.svg'%}" alt=""></a>
+			<a href="{% url 'user:log' %}"><img src="{% static 'img/index_page/first_nav_person.svg'%}" alt=""></a>
+			{% endif %}
 		</nav>
 		<nav class="second_main_page_nav">
 			<a href="">каталог</a>

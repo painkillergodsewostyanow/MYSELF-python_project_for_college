@@ -7,4 +7,5 @@ app_name = 'store'
 urlpatterns = [
     path('', index, name='home'),
     path('book_certificate', book_certificate, name='book_certificate'),
+    path('search', search, name='search')
 ]
