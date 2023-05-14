@@ -1,0 +1,14 @@
+{% extends 'user/base.html' %}
+{% load static %}
+
+
+{% block title %}
+<title>{{title}}</title>
+{% endblock %}
+{% block  action %}
+<form class="form" action="{% url 'user:log' %}" method="post">
+{% endblock %}
+{% block after_form %}
+<div class="form_button"><button type="submit">{{button_title}}</button></div>
+<div class="link"><a href="{% url 'user:reg' %}">{{action_title}}</a></div>
+{% endblock %}

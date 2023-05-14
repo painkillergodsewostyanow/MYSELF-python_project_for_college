@@ -1,0 +1,37 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;600;800&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="{% static 'css/log_style.css' %}">
+
+	{% block title %}{% endblock %}
+</head>
+<body>
+{% block  action %}
+{% endblock %}
+		{% csrf_token %}
+		<div class="titles">
+          {% if is_enter_chosen%}
+            <div style="padding-right: 2vw;border-bottom: 1px solid black;padding-top: 1vw;padding-bottom: 12px;padding-left: 2vw;"><a href="{% url 'user:log' %}">ВОЙТИ</a></div>
+			<div style="padding-top: 1vw;padding-bottom: 12px; padding-right: 2vw;padding-left: 4vw;border-right: 1px solid #A4693D;"><a href="{% url 'user:reg' %}">РЕГИСТРАЦИЯ</a></div>
+          {% else %}
+            <div style="margin-right: 2vw;padding-top: 1vw;padding-bottom: 12px;padding-left: 2vw;"><a href="{% url 'user:log' %}">ВОЙТИ</a></div>
+            <div style="padding-top: 1vw;border-bottom: 1px solid black;padding-bottom: 12px; padding-right: 2vw;padding-left: 4vw;border-right: 1px solid #A4693D;"><a href="{% url 'user:reg' %}">РЕГИСТРАЦИЯ</a></div>
+          {% endif %}
+			<a href=""><img  class="cross" src="{% static 'img/reg_log_page/cross.svg'%}" alt=""></a>
+		</div>
+
+        {% for field in form%}
+
+            <div class="form__group">{{field}}</div>
+
+        {% endfor %}
+		{% block after_form %} {% endblock %}
+	</form>
+</body>
+</html>

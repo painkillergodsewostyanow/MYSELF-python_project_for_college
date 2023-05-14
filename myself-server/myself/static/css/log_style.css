@@ -1,0 +1,90 @@
+body {
+
+	background-color: #A4693D;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100vh;
+	font-family: Inter;
+	letter-spacing: 2px;
+}
+.form {
+	background-color: white;
+	width: 30vw;
+	height: 60vh;
+	box-shadow: 0 4px 16px #ccc;
+
+}
+.form__input::placeholder {color: #A4693D;}
+
+.form__input{
+	width: 100%;
+	height: 5vh;
+	color: #A4693D;
+	border: 0;
+    outline: 0;
+    border-bottom: 1px solid #A4693D;
+    margin-bottom: 2vh;
+}
+
+.form__group{
+	text-align: center;
+	padding-left: 3vw;
+	padding-right: 3vw;
+}
+
+.titles{
+	display: flex;
+	font-size: 1vw;
+	border-bottom: 1px solid #A4693D;
+	margin-bottom: 4vh;
+   	align-items:center;
+   	justify-content: space-between;
+}
+.titles a{
+	text-decoration: none;
+	color: black;
+}
+
+.titles .enter{
+	padding-top: 1vw;
+	margin-right: 4vw;
+	border-bottom: 1px solid black;
+	padding-bottom: 12px;
+	padding-left: 24px;
+}
+.titles .reg{
+	padding-top: 1vw;
+	margin-right: 20px;
+	border-right: 1px solid #A4693D;
+	width: 50%;
+	height: 50%;
+
+}
+.form_button{
+	text-align: center;
+}
+button{
+	width: 70%;
+	height: 5vh;
+	font-size: 1vw;
+	color: white;
+	background-color: #C7B491;
+	border: 0px;
+	margin-bottom: 2vh;
+	margin-top: 4vh;
+}
+.link a{
+	display: block;
+	text-align: center;
+	text-decoration: none;
+	font-size: 0.8vw;
+	color: #A4693D;
+}
+.cross{
+	display: block;
+    max-width: 100%;
+    max-height: 100%;
+    height: 2vh;
+    margin-right: 4vw;
+}
