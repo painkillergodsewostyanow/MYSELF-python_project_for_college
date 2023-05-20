@@ -15,7 +15,7 @@ def reg(request):
         form = UserRegForm()
     context = {
         'form': form,
-        'button_title': "Отправить",
+        'button_title': "СОЗДАТЬ АККАУНТ",
         'action_title': "Отмена",
         'title': "Регистрация",
         'action': 'user:reg',
@@ -39,8 +39,8 @@ def log(request):
 
     context = {
         'form': form,
-        'button_title': "войти",
-        'action_title': "Забыли пароль?",
+        'button_title': "ВОЙТИ",
+        'action_title': "Забыи пароль?",
         'title': "Авторизация",
         'action': 'user:log',
         'is_enter_chosen': True

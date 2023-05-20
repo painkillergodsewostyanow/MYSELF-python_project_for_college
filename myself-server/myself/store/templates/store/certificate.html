@@ -1,14 +1,77 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Закажите сертификат</title>
-</head>
-<body>
-<form action="{% url 'store:book_certificate' %}" method="post">
-    {% csrf_token %}
-    {{form.as_p}}
-    <button type="submit">Заказать</button>
-</form>
-</body>
-</html>
+{% extends "store/base.html" %}
+{% load static %}
+{% block title %} <title>Закажите сертификат</title> {% endblock %}
+{% block css %} <link rel="stylesheet" href="{%static 'css/index_style.css'%}">
+<link rel="stylesheet" href="{%static 'css/book_certificate_style.css'%}">
+{% endblock %}
+{% block bg_photo %}
+<div
+			style="background: url('{% static 'img/book_certificate/bg_img.jpg'%}'); background-size: cover;
+height: 68vh;" class="main_page-block"
+>
+{% endblock %}
+{% block content %}
+<div class="info">
+	<div>ЭЛЕКТРОННЫЙ ПОДАРОЧНЫЙ СЕРТИФИКАТ</div>
+	<div>Приобретай электронные подарочные сертификаты, которые <br>помогут тебе наполнить счастьем любой праздник!</div>
+	<a href="#book_certificate_block">КУПИТЬ СЕРТИФИКАТ</a>
+	<div>Как работает сертификат?</div>
+	<div class="info2">
+.После покупки мы отправляем письмо получателю с <br>
+		личным поздравлением от тебя. <br>
+.Получатель может воспользоваться подарочным <br>
+		сертификатом в тот же день. <br>
+.Подарочный сертификат можно использовать полностью <br>
+		или частично при покупке товаров в интернет-магазине <br>
+		Myself.ru или собственной розничной сети MYSELF. <br>
+.На сертификат можно внести любую сумму до 30 000 <br>
+		рублей.
+.Срок действия подарочного сертификата 1 год.
+	</div>
+</div>
+<div id="book_certificate_block">
+	<div class="item-1">ПОКУПКА ЭЛЕКТРОННОГО <br>ПОДАРОЧНОГО <br>СЕРТИФИКАТА</div>
+	<div class="item-2">ПОДАРИТЕ БЛИЗКОМУ ЧЕЛОВЕКУ ВОЗМОЖНОСТЬ ВЫБРАТЬ <br>
+		ВСЕ, ЧТО ПОНРАВИТСЯ В MYSELF !</div>
+	<form id="book_certificate_form" action="{% url 'store:book_certificate' %}" method="post">
+		{% csrf_token %}
+		<div class="group">
+			<div class="lable">
+			1. ДАННЫЕ ПОЛУЧАТЕЛЯ СЕРТИФИКАТА
+			</div>
+			{{form.name_recipient}}
+			{{form.phone_number_recipient}}
+			{{form.email_recipient}}
+		</div>
+		<div class="group">
+			<div class="lable">
+			2. УКАЖИТЕ НОМИНАЛ СЕРТИФИКАТА
+			</div>
+			{{form.value}}
+		</div>
+		<div class="group">
+			<div class="lable">
+			3. ДОБАВЬТЕ ТЕСТ ПОЗДРАВЛЕНИЯ
+			</div>
+			{{form.congratulation}}
+		</div>
+		<div class="group">
+			<div class="lable">
+			4. КОНТАКТНЫЕ ДАННЫЕ ПЛАТЕЛЬЩИКА
+			</div>
+			{{form.name_payer}}
+			{{form.phone_number_payer}}
+			{{form.email_payer}}
+			<div class="push_bottom">
+			</div>
+		</div>
+	</form>
+	<div class="item-3">
+		<img class="phone_img" src="{% static 'img/book_certificate/phone.jpg' %}" alt="">
+		<label for="final_price" >5. ИТОГОВАЯ СУММА</label>
+		<input id="final_price" type="text" name="final_price" readonly>
+		<button type="submit" form="book_certificate_form">Отправить</button>
+	</div>
+
+</div>
+{% endblock %}

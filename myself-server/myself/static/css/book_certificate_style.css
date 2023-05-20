@@ -1,0 +1,169 @@
+html {
+	scroll-behavior: smooth;
+}
+body{
+
+	font-family: 'Inter';
+	font-style: normal;
+	font-weight: 300;
+    scroll-behavior: smooth;
+
+}
+form {
+    overflow: hidden;
+	background-color: rgba(199, 180, 145, 0.62);
+	width: 44vw;
+	display: inline-block;
+
+}
+form .group input {
+	display: block;
+}
+.lable{
+	font-size: 1vw;
+	color: white;
+	padding-top: 1vw;
+	padding-left: 1vw;
+	margin-bottom: 1vw;
+
+}
+input{
+	padding-left: 1vw;
+	color: black;
+	width: 100%;
+	border: 0;
+	outline: 0;
+	border-bottom: 1px solid white;
+	background-color: transparent;
+	margin-bottom: 1vw;
+	height: 2.8vh;
+	font-size: 0.8vw;
+}
+input::placeholder{
+	color: black;
+}
+
+textarea{
+	width: 100%;
+	height: 12vh;
+	font-size: 0.8vw;
+	color: black;
+	background-color: transparent;
+	max-width: 94%;
+	max-height: 12vh;
+	margin-left: 2%;
+}
+textarea::placeholder{
+	color: black;
+}
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:active,
+input:-webkit-autofill:focus {
+    background-color: #FFFFFF !important;
+    color: black !important;
+    -webkit-box-shadow: 0 0 0 1000px rgba(199, 180, 145, 0.62) inset !important;
+}
+.push_bottom{
+	height: 4vw;
+}
+
+.info{
+
+    color: black;
+
+}
+.info :nth-child(1){
+
+    font-size: 3.8vw;
+    margin-bottom: 2vw;
+
+}
+.info :nth-child(2){
+
+    margin-bottom: 1.6vw;
+
+}
+.info :nth-child(3){
+    display: inline-block;
+    border: 2px solid #C7B491;
+    padding: 1vw;
+    text-decoration: none;
+    color: #C7B491;
+    margin-bottom: 4vw;
+}
+.info :nth-child(3):hover{
+	box-shadow: 10px 5px 5px #C7B491;
+}
+.info :nth-child(4){
+    font-size: 3vw;
+    font-weight: 400;
+    margin-bottom: 4vw;
+}
+.info2 :nth-child(1){
+
+    color: #C7B491;
+
+}
+#book_certificate_block{
+
+    scroll-behavior: smooth;
+    padding-left: 12vw;
+
+}
+.item-1{
+    font-size: 2vw;
+    letter-spacing: 0.25em;
+    margin-bottom: 2vw;
+}
+.item-2{
+
+    font-size: 1.2vw;
+
+}
+#book_certificate_block{
+    position: relative;
+    display: inline-block;
+
+}
+.phone_img {
+    width:100%;
+        height: auto;
+
+}
+.item-3{
+    position:relative;
+    top: 4vw;
+    width:20vw;
+    display: inline-block;
+    margin-left: 5vw;
+}
+#final_price{
+    width: 6vw;
+    height: 1.6vw;
+    display: inline-block;
+    border: 1px solid #C7B491;
+    margin-left: 1.4vw;
+    text-align: center;
+    padding: 0;
+    margin-top:1vw;
+}
+label{
+    font-size:1vw;
+}
+button{
+
+    width:100%;
+    height: 4vh;
+    border: 2px solid black;
+    font-size: 1vw;
+    background-color: white;
+    margin-bottom: 20vw;
+
+}
+button:hover{
+
+    box-shadow: 10px 5px 5px #C7B491;
+    cursor:pointer;
+
+}
