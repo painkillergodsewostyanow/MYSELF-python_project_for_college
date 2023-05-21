@@ -11,6 +11,5 @@ urlpatterns = [
     path('catalog', catalog, name='catalog'),
     path('catalog/sex/<int:sex>', catalog, name='catalog_filters'),
     path('catalog/category/<int:category_id>', catalog, name='catalog_by_category'),
-    path('catalog/sex/<int:sex>/category/<int:category_id>/max_price/<int:max_price>/min_price/<int:min_price>',
-         catalog, name='catalog_by_filter'),
+    path('catalog/sex/<int:sex>/category/<int:category_id>', catalog, name='catalog_by_filter')
 ]
