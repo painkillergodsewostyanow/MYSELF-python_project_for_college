@@ -17,7 +17,6 @@
 		<a href=""><img class="nav_menu" src="{% static 'img/catalog/nav_button.svg' %}" alt=""></a>
 		<div>
 			<a href="{% url 'store:home' %}"><span>MYSELF</span></a>
-			<div class="filter_path">{{path}}</div>
 		</div>
 		<div class="nav_menu">
 
@@ -28,41 +27,8 @@
 
 		</div>
 	</header>
+	<div class="filter_path">{{path}}</div>
 	<div class="title">{{title}}</div>
-	<div class="flex_wrap">
-		<a href=""><div class="filter_item">
-			<img src="{% static 'img/catalog/filter.svg' %}" alt="">
-			<span>Фильтр</span>
-		</div></a>
-		<div class="second_item">
-			<span>Новинки</span>
-			<span>Вид: 2</span>
-		</div>
-	</div>
-	<div class="content">
-		<div class="img_side">
-			{% for img in side_img %}
-			<img src= "{{img}}" alt="">
-			{% endfor %}
-		</div>
-
-		<div class='products_place'>
-
-			{% for product in products %}
-			<div class="product_card">
-				<a href="">
-				<img class="img_product" src="{{product.image.url}}" alt="">
-				</a>
-				<span>{{product.title}}</span>
-				<div class="wrapp">
-					<span class="price">2 998 ₽</span>
-					<img class="add_to_favorite" src="{% static 'img/catalog/add_to_favorite.svg' %}" alt="">
-				</div>
-				{{product.html_colors_represent}}
-			</div>
-			{% endfor %}
-
-		</div>
-
-	</div>
+	{% block content %}
+	{% endblock %}
 </html>

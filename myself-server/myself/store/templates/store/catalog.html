@@ -1,0 +1,40 @@
+{% extends 'store/base_2.html' %}
+{% load static %}
+{% block content %}
+	<div class="flex_wrap">
+		<a href=""><div class="filter_item">
+			<img src="{% static 'img/catalog/filter.svg' %}" alt="">
+			<span>Фильтр</span>
+		</div></a>
+		<div class="second_item">
+			<span>Новинки</span>
+			<span>Вид: 2</span>
+		</div>
+	</div>
+	<div class="content">
+		<div class="img_side">
+			{% for img in side_img %}
+			<img src= "{{img}}" alt="">
+			{% endfor %}
+		</div>
+
+		<div class='products_place'>
+
+			{% for product in products %}
+			<div class="product_card">
+				<a href="">
+				<img class="img_product" src="{{product.image.url}}" alt="">
+				</a>
+				<span>{{product.title}}</span>
+				<div class="wrapp">
+					<span class="price">2 998 ₽</span>
+					<a href="{% url 'user:add_to_favorite' product.id %}"><img class="add_to_favorite" src="{% static 'img/catalog/add_to_favorite.svg' %}" alt=""></a>
+				</div>
+				{{product.html_colors_represent}}
+			</div>
+			{% endfor %}
+
+		</div>
+
+	</div>
+{% endblock %}

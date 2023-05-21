@@ -1,10 +1,23 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Избранное</title>
-</head>
-<body>
-
-</body>
-</html>
+{% extends "store/base_2.html" %}
+{%load static%}
+{% block content %}
+{% if  favorites %}
+<div class='products_place'>
+    {% for favorite in favorites %}
+    <div class="product_card">
+        <a href="">
+            <img class="img_product" src="{{favorite.product.image.url}}" alt="">
+        </a>
+				<span>{{favorite.product.title}}</span>
+				<div class="wrapp">
+					<span class="price">{{favorite.product.cost}}</span>
+                    <a href="{% url 'user:del_from_favorite' favorite.id %}"><img class="add_to_favorite" src="{% static 'img/catalog/del_from_favorite.svg' %}" alt=""></a>
+				</div>
+                {{favorite.product.html_colors_represent}}
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<div class="if_favorites_empty">В избранном нет товаров. вам могут понравиться товары в категории одежда. </div>
+{% endif %}
+{% endblock %}

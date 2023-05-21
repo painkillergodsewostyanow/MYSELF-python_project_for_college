@@ -2,6 +2,7 @@ from django.shortcuts import render, HttpResponseRedirect
 from django.contrib import auth
 from django.urls import reverse
 from user.forms import *
+from user.models import *
 from django.contrib.auth import logout as login_out
 
 
@@ -54,8 +55,35 @@ def logout(request):
     return HttpResponseRedirect(reverse('store:home'))
 
 
-def favorite(request):
-    return render(request, 'user/favorite.html')
+def show_favorite(request):
+    if not request.user.is_authenticated:
+        return HttpResponseRedirect(reverse('user:log'))
+
+    context = {
+
+        'title': "Избранное",
+        'path': 'Главная - Избранное',
+        'favorites': Favorite.objects.filter(user=request.user)
+
+    }
+
+    return render(request, 'user/favorite.html', context)
+
+
+def add_to_favorite(request, product_id):
+    product = Product.objects.get(id=product_id)
+    favorites = Favorite.objects.filter(user=request.user, product=product)
+
+    if not favorites.exists():
+        Favorite.objects.create(user=request.user, product=product, quantity=1)
+
+    return HttpResponseRedirect(request.META['HTTP_REFERER'])
+
+
+def del_from_favorite(request, favorite_id):
+    favorite = Favorite.objects.get(id=favorite_id)
+    favorite.delete()
+    return HttpResponseRedirect(request.META['HTTP_REFERER'])
 
 
 def profile(request):

@@ -50,4 +50,4 @@ def catalog(request, sex=None, category_id=None, max_price=None, min_price=None,
     path = f"Каталог{sex_str_repr}{category_str_repr}"
     title = f"Каталог {sex_str_repr}"
     context = {'products': products, 'title': title, 'path': path, 'side_img': side_img}
-    return render(request, 'store/base_catalog.html', context)
+    return render(request, 'store/catalog.html', context)
