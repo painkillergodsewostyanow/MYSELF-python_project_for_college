@@ -44,7 +44,7 @@ def catalog(request, sex=None, category_id=None, max_price=None, min_price=None,
     else:
         category_str_repr = ''
 
-    side_img = ['/static/img/catalog/side_img2.jpg', '/static/img/catalog/side_img1.jpg'] if sex==2\
+    side_img = ['/static/img/catalog/side_img2.jpg', '/static/img/catalog/side_img1.jpg'] if sex == 2\
         else ['/static/img/catalog/side_img3.jpg']
 
     path = f"Каталог{sex_str_repr}{category_str_repr}"

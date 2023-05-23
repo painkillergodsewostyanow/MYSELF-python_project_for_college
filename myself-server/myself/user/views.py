@@ -1,9 +1,11 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, HttpResponseRedirect
 from django.contrib import auth
 from django.urls import reverse
 from user.forms import *
 from user.models import *
 from django.contrib.auth import logout as login_out
+from myself.settings import LOGIN_URL
 
 
 def reg(request):
@@ -55,14 +57,13 @@ def logout(request):
     return HttpResponseRedirect(reverse('store:home'))
 
 
+@login_required(login_url=LOGIN_URL)
 def show_favorite(request):
-    if not request.user.is_authenticated:
-        return HttpResponseRedirect(reverse('user:log'))
 
     context = {
 
         'title': "Избранное",
-        'path': 'Главная - Избранное',
+        'path': "Избранное",
         'favorites': Favorite.objects.filter(user=request.user)
 
     }
@@ -70,6 +71,7 @@ def show_favorite(request):
     return render(request, 'user/favorite.html', context)
 
 
+@login_required(login_url=LOGIN_URL)
 def add_to_favorite(request, product_id):
     product = Product.objects.get(id=product_id)
     favorites = Favorite.objects.filter(user=request.user, product=product)
@@ -81,10 +83,12 @@ def add_to_favorite(request, product_id):
 
 
 def del_from_favorite(request, favorite_id):
+
     favorite = Favorite.objects.get(id=favorite_id)
     favorite.delete()
     return HttpResponseRedirect(request.META['HTTP_REFERER'])
 
 
+@login_required(login_url=LOGIN_URL)
 def profile(request):
     return render(request, 'user/profile.html')

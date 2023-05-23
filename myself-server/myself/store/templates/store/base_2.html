@@ -20,10 +20,10 @@
 		</div>
 		<div class="nav_menu">
 
-			<a href=""><img style="margin-left: 0;" src="{% static 'img/catalog/search.svg' %}" alt=""><a/>
-			<a href=""><img src="{% static 'img/catalog/bascet.svg' %}" alt=""></a>
-			<a href=""><img src="{% static 'img/catalog/heart.svg' %}" alt=""></a>
-			<a href=""><img src="{% static 'img/catalog/person.svg' %}" alt=""></a>
+			<a href="{% url 'store:search' %}"><img style="margin-left: 0;" src="{% static 'img/catalog/search.svg' %}" alt=""><a/>
+			<a href='#'><img src="{% static 'img/catalog/bascet.svg' %}" alt=""></a>
+			<a href="{% url 'user:favorite' %}"><img src="{% static 'img/catalog/heart.svg' %}" alt=""></a>
+			<a href="{% url 'user:profile' %}"><img src="{% static 'img/catalog/person.svg' %}" alt=""></a>
 
 		</div>
 	</header>
