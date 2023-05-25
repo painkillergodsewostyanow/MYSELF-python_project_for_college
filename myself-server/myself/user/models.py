@@ -7,6 +7,10 @@ class User(AbstractUser):
     phone_number = models.CharField(max_length=15)
     image = models.ImageField(upload_to="users_img", null=True, blank=True)
 
+    class Meta:
+        verbose_name = "Пользователи"
+        verbose_name_plural = "Пользователи"
+
 
 class Favorite(models.Model):
     user = models.ForeignKey(to=User, on_delete=models.CASCADE)

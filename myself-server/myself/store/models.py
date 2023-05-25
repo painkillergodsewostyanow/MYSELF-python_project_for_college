@@ -86,6 +86,3 @@ class Product(models.Model):
         verbose_name = "Товар"
         verbose_name_plural = "Товары"
 
-
-class Favorite(models.Model):
-    ...

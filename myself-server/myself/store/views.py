@@ -37,6 +37,7 @@ def catalog(request, sex=None, category_id=None, max_price=None, min_price=None,
             sex_str_repr = "Унисекс"
     else:
         sex_str_repr = ""
+
     if category_id:
         products = products.filter(category_id=category_id)
         category_str_repr = '' if ProductCategory.objects.get(pk=category_id) is None else \

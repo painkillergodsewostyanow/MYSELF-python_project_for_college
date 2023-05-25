@@ -83,7 +83,6 @@ def add_to_favorite(request, product_id):
 
 
 def del_from_favorite(request, favorite_id):
-
     favorite = Favorite.objects.get(id=favorite_id)
     favorite.delete()
     return HttpResponseRedirect(request.META['HTTP_REFERER'])
