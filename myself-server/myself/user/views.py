@@ -1,74 +1,125 @@
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.views import LoginView
 from django.shortcuts import render, HttpResponseRedirect
-from django.contrib import auth
-from django.urls import reverse
+from django.views.generic import ListView, CreateView
+from django.urls import reverse, reverse_lazy
 from user.forms import *
 from user.models import *
-from django.contrib.auth import logout as login_out
 from myself.settings import LOGIN_URL
 
 
-def reg(request):
-    if request.method == 'POST':
-        form = UserRegForm(data=request.POST)
-        if form.is_valid():
-            form.save()
-            return HttpResponseRedirect(reverse("user:log"))
-    else:
-        form = UserRegForm()
-    context = {
-        'form': form,
-        'button_title': "СОЗДАТЬ АККАУНТ",
-        'action_title': "Отмена",
-        'title': "Регистрация",
-        'action': 'user:reg',
-        'is_enter_chosen': False
-    }
-    return render(request, 'user/reg.html', context)
+class UserRegistrationView(CreateView):
+    model = User
+    form_class = UserRegForm
+    template_name = 'user/reg.html'
+    success_url = reverse_lazy("user:log")
+
+    def get_context_data(self, **kwargs):
+        context = super(UserRegistrationView, self).get_context_data()
+        context['button_title'] = "СОЗДАТЬ АККАУНТ"
+        context['action_title'] = "Отмена"
+        context['title'] = "Регистрация"
+        context['action'] = "user:reg"
+        context['is_enter_chosen'] = False
+        return context
 
 
-def log(request):
-    if request.method == 'POST':
-        form = UserLoginForm(data=request.POST)
-        if form.is_valid():
-            username = request.POST['username']
-            password = request.POST['password']
-            user = auth.authenticate(username=username, password=password)
-            if user:
-                auth.login(request, user)
-                return HttpResponseRedirect('/')
-    else:
-        form = UserLoginForm()
-
-    context = {
-        'form': form,
-        'button_title': "ВОЙТИ",
-        'action_title': "Забыи пароль?",
-        'title': "Авторизация",
-        'action': 'user:log',
-        'is_enter_chosen': True
-    }
-
-    return render(request, 'user/log.html', context)
+# def reg(request):
+#     if request.method == 'POST':
+#         form = UserRegForm(data=request.POST)
+#         if form.is_valid():
+#             form.save()
+#             return HttpResponseRedirect(reverse("user:log"))
+#     else:
+#         form = UserRegForm()
+#
+#     context = {
+#         'form': form,
+#         'button_title': "СОЗДАТЬ АККАУНТ",
+#         'action_title': "Отмена",
+#         'title': "Регистрация",
+#         'action': 'user:reg',
+#         'is_enter_chosen': False
+#     }
+#     return render(request, 'user/reg.html', context)
+#
 
 
-def logout(request):
-    login_out(request)
-    return HttpResponseRedirect(reverse('store:home'))
+class UserLoginView(LoginView):
+    template_name = 'user/log.html'
+    form_class = UserLoginForm
+
+    def get_context_data(self, **kwargs):
+        context = super(UserLoginView, self).get_context_data()
+        context['button_title'] = "ВОЙТИ"
+        context['action_title'] = "Забыи пароль?"
+        context['title'] = "Авторизация"
+        context['action'] = "user:log"
+        context['is_enter_chosen'] = True
+        return context
 
 
-@login_required(login_url=LOGIN_URL)
-def show_favorite(request):
+# def log(request):
+#     if request.method == 'POST':
+#         form = UserLoginForm(data=request.POST)
+#         if form.is_valid():
+#             username = request.POST['username']
+#             password = request.POST['password']
+#             user = auth.authenticate(username=username, password=password)
+#             if user:
+#                 auth.login(request, user)
+#                 return HttpResponseRedirect('/')
+#     else:
+#         form = UserLoginForm()
+#
+#     context = {
+#         'form': form,
+#         'button_title': "ВОЙТИ",
+#         'action_title': "Забыи пароль?",
+#         'title': "Авторизация",
+#         'action': 'user:log',
+#         'is_enter_chosen': True
+#     }
+#
+#     return render(request, 'user/log.html', context)
 
-    context = {
+# USE BASE LOGOUT VIEW FROM DJANGO
+# def logout(request):
+#     login_out(request)
+#     return HttpResponseRedirect(reverse('store:home'))
 
-        'title': "Избранное",
-        'path': "Избранное",
-        'favorites': Favorite.objects.filter(user=request.user)
 
-    }
+class FavoriteListView(LoginRequiredMixin, ListView):
+    model = Favorite
+    template_name = 'user/favorite.html'
+    login_url = 'user/reg'
 
-    return render(request, 'user/favorite.html', context)
+    def get_context_data(self, **kwargs):
+        context = super(FavoriteListView, self).get_context_data()
+        context['title'] = 'Избранное'
+        context['path'] = 'Избранное'
+        return context
+
+    def get_queryset(self):
+        queryset = super(FavoriteListView, self).get_queryset()
+        queryset = queryset.filter(user=self.request.user)
+        return queryset
+
+
+# @login_required(login_url=LOGIN_URL)
+# def show_favorite(request):
+#
+#     context = {
+#
+#         'title': "Избранное",
+#         'path': "Избранное",
+#         'favorites': Favorite.objects.filter(user=request.user)
+#
+#     }
+#
+#     return render(request, 'user/favorite.html', context)
+#
 
 
 @login_required(login_url=LOGIN_URL)

@@ -1,9 +1,9 @@
 {% extends "store/base_2.html" %}
 {%load static%}
 {% block content %}
-{% if  favorites %}
+{% if  object_list %}
 <div class='products_place'>
-    {% for favorite in favorites %}
+    {% for favorite in object_list %}
     <div class="product_card">
         <a href="">
             <img class="img_product" src="{{favorite.product.image.url}}" alt="">
