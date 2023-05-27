@@ -2,7 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView
 from django.shortcuts import render, HttpResponseRedirect
-from django.views.generic import ListView, CreateView
+from django.views.generic import ListView, CreateView, TemplateView
 from django.urls import reverse, reverse_lazy
 from user.forms import *
 from user.models import *
@@ -142,3 +142,42 @@ def del_from_favorite(request, favorite_id):
 @login_required(login_url=LOGIN_URL)
 def profile(request):
     return render(request, 'user/profile.html')
+
+
+class EmailVerificationView(TemplateView):
+    template_name = 'user/email_verification.html'
+    is_success = True
+
+    def get(self, request, *args, **kwargs):
+        code = kwargs['code']
+        user = User.objects.get(email=kwargs['email'])
+        email_verifications = EmailVerification.objects.filter(user=user, code=code).first()
+
+        if email_verifications.is_expired():
+            self.is_success = False
+            email_verifications.code = uuid.uuid4()
+            email_verifications.expiration = now() + timedelta(hours=4)
+            email_verifications.save()
+            email_verifications.send_verification_email(is_expired=True)
+            return super(EmailVerificationView, self).get(request, *args, **kwargs)
+
+        if email_verifications:
+            user.is_email_verified = True
+            user.save()
+            certificates = Certificate.objects.filter(email_recipient=self.kwargs['email'])
+
+            for certificate in certificates:
+                certificate.user = user
+                certificate.save()
+
+            return super(EmailVerificationView, self).get(request, *args, **kwargs)
+        else:
+            return HttpResponseRedirect(reverse("store:home"))
+
+    def get_context_data(self, **kwargs):
+        context = super(EmailVerificationView, self).get_context_data()
+        if self.is_success:
+            context['message'] = "Почта успешно подтвердена"
+        else:
+            context['message'] = "Ссылка для подтверждения почты устарела, на вашу почта пришла новая ссылка"
+        return context

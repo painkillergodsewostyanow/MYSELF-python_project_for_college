@@ -138,3 +138,18 @@ AUTH_USER_MODEL = 'user.User'
 LOGIN_URL = '/user/log'
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
+
+# send email block
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = "myselfclothesstore@gmail.com"
+EMAIL_HOST_PASSWORD = "jafzgbayhnsiwdoe"
+EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False
+
+DOMAIN_NAME = 'http://localhost:8000'
+
+# CONST FOR CERTIFICATE FORM
+USER_NOT_CREATED = 0
+USER_EMAIL_NOT_VERIFIED = 1
+USER_GET_CERTIFICATE = 2

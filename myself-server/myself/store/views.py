@@ -10,6 +10,7 @@ from django.views.generic.list import ListView
 class IndexView(TemplateView):
     template_name = 'store/index.html'
 
+
 # def index(request):
 #     return render(request, 'store/index.html')
 
@@ -60,6 +61,7 @@ class CatalogListView(ListView):
         context['path'] = path_filter
         context['side_img'] = side_img
         return context
+
 
 # def catalog(request, sex=None, category_id=None, max_price=None, min_price=None, sale=None):
 #     products = Product.objects.all()
@@ -112,4 +114,3 @@ class BookCertificateCreateView(CreateView):
 
 def search(request):
     return render(request, 'store/search.html')
-

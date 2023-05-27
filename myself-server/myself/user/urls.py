@@ -9,6 +9,7 @@ urlpatterns = [
     path('reg', UserRegistrationView.as_view(), name='reg'),
     path('log', UserLoginView.as_view(), name='log'),
     path('logout', LogoutView.as_view(), name='logout'),
+    path('verify/<str:email>/<uuid:code>', EmailVerificationView.as_view(), name="email_verification"),
     path('favorite', FavoriteListView.as_view(), name='favorite'),
     path('profile', profile, name='profile'),
     path('favorite/add/<int:product_id>/', add_to_favorite, name="add_to_favorite"),

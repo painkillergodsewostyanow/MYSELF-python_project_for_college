@@ -1,5 +1,6 @@
 from django import forms
-from .models import Certificate
+from user.models import Certificate, User
+from django.conf import settings
 
 
 class BookCertificate(forms.ModelForm):
@@ -28,6 +29,24 @@ class BookCertificate(forms.ModelForm):
     email_payer = forms.EmailField(widget=forms.EmailInput(attrs={
         'placeholder': 'E-mail'
     }))
+
+    def save(self, commit=True):
+        certificate = super(BookCertificate, self).save(commit=True)
+        user = User.objects.filter(email=certificate.email_recipient).last()
+
+        if not user:
+            certificate.send_notify_email(code=settings.USER_NOT_CREATED)
+            return certificate
+
+        if not user.is_email_verified:
+            certificate.send_notify_email(code=settings.USER_EMAIL_NOT_VERIFIED)
+            return certificate
+        else:
+            certificate.user = user
+            certificate.save()
+            certificate.send_notify_email()
+
+        return certificate
 
     class Meta:
         model = Certificate

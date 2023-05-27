@@ -12,12 +12,6 @@ class ProductAdmin(admin.ModelAdmin):
     get_image.short_description = "Миниатюра"
 
 
-class CertificateAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name_recipient', 'value', 'name_payer', 'phone_number_payer', 'is_used')
-    search_fields = ('name_recipient', 'size')
-
-
-admin.site.register(Certificate, CertificateAdmin)
 admin.site.register(Product, ProductAdmin)
 admin.site.register(ProductCategory)
 admin.site.register(Size)
