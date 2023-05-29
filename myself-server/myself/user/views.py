@@ -171,13 +171,11 @@ class EmailVerificationView(TemplateView):
                 certificate.save()
 
             return super(EmailVerificationView, self).get(request, *args, **kwargs)
-        else:
-            return HttpResponseRedirect(reverse("store:home"))
 
     def get_context_data(self, **kwargs):
         context = super(EmailVerificationView, self).get_context_data()
         if self.is_success:
-            context['message'] = "Почта успешно подтвердена"
+            context['message'] = "Почта успешно подтверждена"
         else:
             context['message'] = "Ссылка для подтверждения почты устарела, на вашу почта пришла новая ссылка"
         return context

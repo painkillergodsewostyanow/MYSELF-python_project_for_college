@@ -6,6 +6,8 @@ from django.utils.timezone import now
 from django.urls import reverse
 from django.conf import settings
 from store.models import Product
+from django.core.mail import EmailMultiAlternatives
+from django.template.loader import render_to_string
 
 
 class User(AbstractUser):
@@ -36,35 +38,29 @@ class Certificate(models.Model):
 
     def send_notify_email(self, code=settings.USER_GET_CERTIFICATE):
         subject = f"MYSELF: сертификат от {self.email_payer}"
-        message = f"На ваш адресс электронной почты был куплен сертификат \n" \
-                  f"на сумму: {self.value} \n" \
-                  f"почта дарителя{self.email_payer} номер дарителя: {self.phone_number_payer}\n" \
-                  f"текст поздравления: {self.congratulation}\n" \
-                  f"так как у вас уже создан аккаунт, с подтвержденной почтой, сертификат добавлен на него"
+        context = {
+            'value': self.value,
+            'email_payer': self.email_payer,
+            'phone_payer': self.phone_number_payer,
+            'congratulation': self.congratulation,
+            'todo': "Так как у вас уже создан аккаунт, с подтвержденной почтой, сертификат добавлен на него"
+        }
 
         if code == settings.USER_NOT_CREATED:
-            message = f"На ваш адресс электронной почты был куплен сертификат \n" \
-                      f"на сумму: {self.value} \n" \
-                      f"почта дарителя: {self.email_payer} номер дарителя: {self.phone_number_payer}\n" \
-                      f"текст поздравления: {self.congratulation}\n" \
-                      f"что бы воспользоваться сертификатом, зарегистрируйте аккаунт и подтвердите почту\n" \
-                      f"{settings.DOMAIN_NAME}{reverse('user:reg')}"
+            context['todo'] = f"что бы воспользоваться сертификатом, зарегистрируйте аккаунт и " \
+                              f"подтвердите почту{settings.DOMAIN_NAME}{reverse('user:reg')}"
 
         if code == settings.USER_EMAIL_NOT_VERIFIED:
-            message = f"На ваш адресс электронной почты был куплен сертификат \n" \
-                      f"\tна сумму: {self.value} \n" \
-                      f"\tпочта дарителя{self.email_payer} номер дарителя: {self.phone_number_payer}\n" \
-                      f"текст поздравления: {self.congratulation}\n" \
-                      f"что бы воспользоваться сертификатом, подтвердите почту\n" \
-                      f"{settings.DOMAIN_NAME}{reverse('store:home')}"
+            context['todo'] = f"что бы воспользоваться сертификатом, подтвердите почту" \
+                               f"{settings.DOMAIN_NAME}{reverse('store:home')}"
 
-        send_mail(
-            subject,
-            message,
-            settings.EMAIL_HOST_USER,
-            [self.email_recipient],
-            fail_silently=False,
-        )
+        html_message = render_to_string('email_templates/certificate_notify.html', context)
+
+        alternative_msg = EmailMultiAlternatives(subject=subject, from_email=settings.EMAIL_HOST_USER,
+                                                 to=[self.email_recipient])
+        alternative_msg.attach_alternative(html_message, 'text/html')
+        alternative_msg.send()
+        # TODO: wait a design
 
     def __str__(self):
         return f"Сертификат номер {self.pk} для {self.name_recipient}"
@@ -96,6 +92,7 @@ class EmailVerification(models.Model):
             [self.user.email],
             fail_silently=False,
         )
+        # TODO: wait a design
 
     def is_expired(self):
         return now() >= self.expiration
