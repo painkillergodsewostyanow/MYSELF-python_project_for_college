@@ -1,0 +1,35 @@
+.card{
+	width: 34vw;
+	height: 16vw;
+	position: fixed;
+  	top: 20%;
+  	left: 50%;
+  	border: 1px solid black;
+  	transform: translate(-50%, -50%);
+}
+.card img{
+	display: block;
+	margin: 0 auto;
+	margin-top: 2vw;
+	width: 6vw;
+}
+.card span{
+	display: block;
+	font-size: 1vw;
+	text-align: center;
+	margin-top: 2vw;
+}
+.button{
+	position: absolute;
+	bottom: 0px;
+	background: #C7B491;
+	width: 100%;
+	text-align: center;
+	padding-top: 1vw;
+	padding-bottom: 1vw;
+	font-size: 1vw;
+}
+.card a{
+	text-decoration: none;
+	color: black;
+}

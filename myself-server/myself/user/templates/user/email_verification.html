@@ -1,10 +1,18 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>учетная запись подтверждена</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="{% static 'css/email_verification_redirect_style.css' %}">
+	<title>{{title}}</title>
 </head>
 <body>
-    <h1>{{message}}</h1>
+	<div class="card">
+		<img src="{% static 'img/email/logo.svg' %}" alt="">
+		<span class="message">{{message}}</span>
+		<a href="{% url 'store:home' %}"><div class="button">Продолжить</div></a>
+	</div>
 </body>
 </html>

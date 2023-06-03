@@ -55,12 +55,21 @@ class Certificate(models.Model):
                                f"{settings.DOMAIN_NAME}{reverse('store:home')}"
 
         html_message = render_to_string('email_templates/certificate_notify.html', context)
+        send_mail(
+            subject,
+            '',
+            settings.EMAIL_HOST_USER,
+            [self.email_recipient],
+            html_message=html_message,
+            fail_silently=False
 
-        alternative_msg = EmailMultiAlternatives(subject=subject, from_email=settings.EMAIL_HOST_USER,
-                                                 to=[self.email_recipient])
-        alternative_msg.attach_alternative(html_message, 'text/html')
-        alternative_msg.send()
-        # TODO: wait a design
+        )
+        #
+        # alternative_msg = EmailMultiAlternatives(subject=subject, from_email=settings.EMAIL_HOST_USER,
+        #                                          to=[self.email_recipient])
+        # alternative_msg.attach_alternative(html_message, 'text/html')
+        # alternative_msg.send()
+        # # TODO: wait a design
 
     def __str__(self):
         return f"Сертификат номер {self.pk} для {self.name_recipient}"

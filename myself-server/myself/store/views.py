@@ -1,6 +1,6 @@
 from django.shortcuts import render, HttpResponseRedirect
 from django.urls import reverse_lazy
-from django.views.generic import CreateView
+from django.views.generic import CreateView, DetailView
 from store.models import *
 from store.forms import *
 from django.views.generic.base import TemplateView
@@ -61,6 +61,11 @@ class CatalogListView(ListView):
         context['path'] = path_filter
         context['side_img'] = side_img
         return context
+
+
+class ProductDetailView(DetailView):
+    model = Product
+    template_name = 'store/product_detail.html'
 
 
 # def catalog(request, sex=None, category_id=None, max_price=None, min_price=None, sale=None):

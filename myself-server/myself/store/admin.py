@@ -7,15 +7,15 @@ class PhotoImagesInline(admin.TabularInline):
     extra = 1
 
 
-class ColorInline(admin.TabularInline):
-    model = Color.product.through
-    extra = 1
+# class ColorInline(admin.TabularInline):
+#     model = Color.product.through
+#     extra = 1
 
 
 class ProductAdmin(admin.ModelAdmin):
     list_display = ('title', 'size', 'quantity_in_stock', 'get_image')
     search_fields = ('title', 'size')
-    inlines = (ColorInline, PhotoImagesInline)
+    inlines = (PhotoImagesInline, )
 
     def get_image(self, obj):
         return mark_safe(f'<img src={obj.image.url} width="50" height="70">')

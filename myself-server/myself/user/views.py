@@ -175,7 +175,7 @@ class EmailVerificationView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super(EmailVerificationView, self).get_context_data()
         if self.is_success:
-            context['message'] = "Почта успешно подтверждена"
+            context['message'] = "Ваша почта на сайте Myself успешно подтверждена!"
         else:
-            context['message'] = "Ссылка для подтверждения почты устарела, на вашу почта пришла новая ссылка"
+            context['message'] = "К сожалению ссылка устарела, на почту отправлена новая"
         return context

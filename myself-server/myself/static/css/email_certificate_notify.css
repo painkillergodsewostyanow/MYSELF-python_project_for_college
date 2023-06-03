@@ -1,0 +1,22 @@
+.card{
+	position: fixed;
+	left: 50%;
+	top:20%;
+	transform: translate(-50%, -50%);
+	width: 40vw;
+}
+.header{
+	height: 8vw;
+	display: flex;
+	align-items: center;
+	background: #C7B491;
+}
+.header div{
+	color: white;
+	font-size: 3vw;
+	margin-left: 6vw;
+}
+.header img{
+	width: 6vw;
+	margin-left: 2vw;
+}

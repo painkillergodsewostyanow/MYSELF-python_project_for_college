@@ -13,7 +13,9 @@
 					<span class="price">{{favorite.product.cost}}</span>
                     <a href="{% url 'user:del_from_favorite' favorite.id %}"><img class="add_to_favorite" src="{% static 'img/catalog/del_from_favorite.svg' %}" alt=""></a>
 				</div>
-                {{favorite.product.html_colors_represent}}
+                {% for color in favorite.product.html_colors_represent %}
+				{{color}}
+				{% endfor %}
     </div>
     {% endfor %}
 </div>
