@@ -14,7 +14,7 @@ class ProductCategory(models.Model):
 
 
 class Color(models.Model):
-    hex = models.CharField(max_length=50)
+    color = models.CharField(max_length=50)
     normal_repr = models.CharField(max_length=50)
 
     def __str__(self):
@@ -58,20 +58,24 @@ class Product(models.Model):
         products = Product.objects.filter(title=self.title)
         result = []
         for product in products:
-            result.append(mark_safe(f"<div style='display: inline-block;" \
-                      f"margin-right: 0.2vw;" \
-                      f"width: 1vw;height: 1vw;" \
-                      f"-webkit-border-radius: 25px;" \
-                      f"-moz-border-radius: 25px;" \
-                      f"border-radius: 25px;" \
-                      f"background: {product.color.hex};border:" \
-                      f" 2px solid gray;'></div>"))
-
+            result.append((mark_safe(f"<div style='display: inline-block;"
+                                    f"margin-right: 0.2vw;"
+                                    f"width: 1vw;height: 1vw;"
+                                    f"-webkit-border-radius: 25px;"
+                                    f"-moz-border-radius: 25px;"
+                                    f"border-radius: 25px;"
+                                    f"background: {product.color.color};border:"
+                                    f" 2px solid gray;'></div>"), product.color.color))
         return result
 
     @property
     def similar(self):
-        ...
+        result = Product.objects.filter(color=self.color, category=self.category)
+        if len(result) < 4:
+            result = Product.objects.filter(color=self.color, category=self.category)
+
+        return result[0:4]
+        # TODO: in future more logical
 
     @property
     def sizes(self):

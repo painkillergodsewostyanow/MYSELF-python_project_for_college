@@ -31,7 +31,7 @@
 					<a href="{% url 'user:add_to_favorite' product.id %}"><img class="add_to_favorite" src="{% static 'img/catalog/add_to_favorite.svg' %}" alt=""></a>
 				</div>
 				{% for color in product.html_colors_represent %}
-				{{color}}
+				{{color.0}}
 				{% endfor %}
 			</div>
 			{% endfor %}

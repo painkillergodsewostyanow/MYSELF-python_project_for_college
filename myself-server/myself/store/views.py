@@ -63,9 +63,23 @@ class CatalogListView(ListView):
         return context
 
 
-class ProductDetailView(DetailView):
-    model = Product
-    template_name = 'store/product_detail.html'
+def product_detail(request, pk=None, color=None):
+    if color:
+        product = Product.objects.get(title=Product.objects.get(pk=pk).title, color=Color.objects.get(color=color))
+        context = {
+            'product': product
+        }
+    else:
+
+        product = Product.objects.get(pk=pk)
+        context = {'product': product}
+
+    return render(request, 'store/product_detail.html', context)
+
+
+# class ProductDetailView(DetailView):
+#     model = Product
+#     template_name = 'store/product_detail.html'
 
 
 # def catalog(request, sex=None, category_id=None, max_price=None, min_price=None, sale=None):
@@ -119,3 +133,4 @@ class BookCertificateCreateView(CreateView):
 
 def search(request):
     return render(request, 'store/search.html')
+

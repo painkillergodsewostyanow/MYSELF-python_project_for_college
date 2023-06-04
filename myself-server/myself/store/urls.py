@@ -12,5 +12,6 @@ urlpatterns = [
     path('catalog/sex/<int:sex>', CatalogListView.as_view(), name='catalog_filters'),
     path('catalog/category/<int:category_id>', CatalogListView.as_view(), name='catalog_by_category'),
     path('catalog/sex/<int:sex>/category/<int:category_id>', CatalogListView.as_view(), name='catalog_by_filter'),
-    path('catalog/<int:pk>', ProductDetailView.as_view(), name='product_detail')
+    path('catalog/product/<int:pk>', product_detail, name='product_detail'),
+    path('catalog/product/<int:pk>/<str:color>', product_detail, name='product_detail')
 ]

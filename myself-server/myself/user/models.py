@@ -115,3 +115,4 @@ class Favorite(models.Model):
 
     def __str__(self):
         return f"Избранное для {self.user.username}"
+
