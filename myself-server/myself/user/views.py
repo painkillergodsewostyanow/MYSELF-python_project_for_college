@@ -129,20 +129,26 @@ def add_to_favorite(request, product_id):
     favorites = Favorite.objects.filter(user=request.user, product=product)
 
     if not favorites.exists():
-        Favorite.objects.create(user=request.user, product=product, quantity=1)
+        Favorite.objects.create(user=request.user, product=product)
 
     return HttpResponseRedirect(request.META['HTTP_REFERER'])
 
 
-def del_from_favorite(request, favorite_id):
-    favorite = Favorite.objects.get(id=favorite_id)
+def del_from_favorite(request, product_id):
+    favorite = Favorite.objects.get(id=Favorite.objects.get(product=product_id).pk)
     favorite.delete()
     return HttpResponseRedirect(request.META['HTTP_REFERER'])
 
 
 @login_required(login_url=LOGIN_URL)
 def profile(request):
-    return render(request, 'user/profile.html')
+    context = {
+        'basket': Basket.objects.filter(user=request.user),
+        'total_cost': Basket.total_cost(request.user),
+        'certificate': Certificate.get_certificate_by_user(request.user)
+    }
+
+    return render(request, 'user/profile.html', context)
 
 
 class EmailVerificationView(TemplateView):

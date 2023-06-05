@@ -73,7 +73,6 @@ class Product(models.Model):
         result = Product.objects.filter(color=self.color, category=self.category).exclude(pk=self.pk)
         if len(result) < 4:
             result = Product.objects.filter(category=self.category).exclude(pk=self.pk)
-
         return result
         # TODO: in future more logical
 

@@ -6,6 +6,8 @@ from store.forms import *
 from django.views.generic.base import TemplateView
 from django.views.generic.list import ListView
 
+from user.models import Favorite
+
 
 class IndexView(TemplateView):
     template_name = 'store/index.html'
@@ -67,12 +69,17 @@ def product_detail(request, pk=None, color=None):
     if color:
         product = Product.objects.get(title=Product.objects.get(pk=pk).title, color=Color.objects.get(color=color))
         context = {
-            'product': product
+            'product': product,
+            'favorite_product': Favorite.get_favorite_product(user=request.user)
         }
-    else:
 
+    else:
         product = Product.objects.get(pk=pk)
-        context = {'product': product}
+        context = {
+            'product': product,
+            'favorite_product': Favorite.get_favorite_product(user=request.user)
+        }
+    # TODO: сделать нормально
 
     return render(request, 'store/product_detail.html', context)
 
@@ -133,4 +140,3 @@ class BookCertificateCreateView(CreateView):
 
 def search(request):
     return render(request, 'store/search.html')
-

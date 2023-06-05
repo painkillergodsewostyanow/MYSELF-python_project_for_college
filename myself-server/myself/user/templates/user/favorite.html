@@ -11,7 +11,7 @@
 				<span>{{favorite.product.title}}</span>
 				<div class="wrapp">
 					<span class="price">{{favorite.product.cost}}</span>
-                    <a href="{% url 'user:del_from_favorite' favorite.id %}"><img class="add_to_favorite" src="{% static 'img/catalog/del_from_favorite.svg' %}" alt=""></a>
+                    <a href="{% url 'user:del_from_favorite' favorite.product.id %}"><img class="add_to_favorite" src="{% static 'img/catalog/del_from_favorite.svg' %}" alt=""></a>
 				</div>
                 {% for color in favorite.product.html_colors_represent %}
 				<a href="{% url 'store:product_detail' favorite.product.id color.1 %}">{{color.0}}</a>

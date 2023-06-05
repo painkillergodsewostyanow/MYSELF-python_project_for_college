@@ -36,6 +36,13 @@ class Certificate(models.Model):
     email_payer = models.EmailField(blank=True)
     is_used = models.BooleanField(default=False)
 
+    def __str__(self):
+        return f"Сертификат номер {self.pk} для {self.name_recipient}"
+
+    @staticmethod
+    def get_certificate_by_user(user):
+        return Certificate.objects.filter(user=user)
+
     def send_notify_email(self, code=settings.USER_GET_CERTIFICATE):
         subject = f"MYSELF: сертификат от {self.email_payer}"
         context = {
@@ -70,9 +77,6 @@ class Certificate(models.Model):
         # alternative_msg.attach_alternative(html_message, 'text/html')
         # alternative_msg.send()
         # # TODO: wait a design
-
-    def __str__(self):
-        return f"Сертификат номер {self.pk} для {self.name_recipient}"
 
     class Meta:
         verbose_name = "Сертификат"
@@ -112,6 +116,14 @@ class Favorite(models.Model):
     product = models.ForeignKey(to=Product, on_delete=models.CASCADE)
     create_timestamp = models.DateTimeField(auto_now_add=True)
 
+    @staticmethod
+    def get_favorite_product(user):
+        product_lst = []
+        for favorite in Favorite.objects.filter(user=user):
+            product_lst.append(Product.objects.get(pk=favorite.product.pk))
+
+        return product_lst
+
     def __str__(self):
         return f"Избранное для {self.user.username}"
 
@@ -125,6 +137,11 @@ class Basket(models.Model):
     def __str__(self):
         return f"Корзина для {self.user.username}"
 
-    @property
-    def total_cost(self):
-        ...
+    @staticmethod
+    def total_cost(user):
+        products = Basket.objects.filter(user=user)
+        summ = 0
+        for product in products:
+            summ += product.product.cost
+
+        return summ

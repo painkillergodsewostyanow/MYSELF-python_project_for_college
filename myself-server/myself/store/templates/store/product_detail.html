@@ -60,12 +60,16 @@
 					<span>{{similar_product.title}}</span>
 					<div class="wrapp">
 						<span class="price">{{similar_product.cost}}</span>
-						<a href="{% url 'user:add_to_favorite' product.id %}"><img class="add_to_favorite" src="{% static 'img/catalog/add_to_favorite.svg' %}" alt=""></a>
+						{% if similar_product in favorite_product %}
+							<a href="{% url 'user:del_from_favorite' similar_product.id %}"><img class="add_to_favorite" src="{% static 'img/catalog/del_from_favorite.svg' %}" alt=""></a>
+						{% else %}
+							<a href="{% url 'user:add_to_favorite' similar_product.id %}"><img class="add_to_favorite" src="{% static 'img/catalog/add_to_favorite.svg' %}" alt=""></a>
+						{% endif %}
 					</div>
 					{% for color in similar_product.html_colors_represent %}
 					<a href="{% url 'store:product_detail' similar_product.id %}">{{color.0}}</a>
 					{% endfor %}
-				</div>
+					</div>
 			</div>
 	{% endfor %}
 		</div>
