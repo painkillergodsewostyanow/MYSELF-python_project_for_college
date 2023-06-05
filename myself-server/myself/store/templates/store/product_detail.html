@@ -32,12 +32,20 @@
 		{% endfor %}
 		<div class="color_repr">{{product.color.normal_repr}}</div>
 	</div>
-	<div class="sizes">
-		{% for size in product.sizes %}
-		<input type="radio" name="size"> {{size}}
-		{% endfor %}
-	</div>
+
+		<form action="{% url 'user:basket_add' %}" method="POST">
+			{% csrf_token %}
+		<div class="sizes">
+			{% for size in product.sizes %}
+			<input type="radio" name="size" value="{{size.1}}"> {{size.0}}
+			{% endfor %}
+			<input type="hidden" name="product_id" value="{{product.id}}">
+		</div>
+		<button class="add_to_basket" type="submit"> Добавить в карзину </button>
+		</form>
+
 </div>
+{% if product.similar %}
 <div class="similar">
 	<span>ПОХОЖИЕ ТОВАРЫ</span>
 
@@ -62,7 +70,7 @@
 	{% endfor %}
 		</div>
 	</div>
-
+{% endif %}
 
 </div>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.min.js"></script>

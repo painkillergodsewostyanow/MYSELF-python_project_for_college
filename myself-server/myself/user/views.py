@@ -7,6 +7,7 @@ from django.urls import reverse, reverse_lazy
 from user.forms import *
 from user.models import *
 from myself.settings import LOGIN_URL
+from store.models import Size
 
 
 class UserRegistrationView(CreateView):
@@ -179,3 +180,23 @@ class EmailVerificationView(TemplateView):
         else:
             context['message'] = "К сожалению ссылка устарела, на почту отправлена новая"
         return context
+
+
+@login_required(login_url=LOGIN_URL)
+def basket_add(request):
+    product = Product.objects.get(title=Product.objects.get(pk=request.POST['product_id']).title,
+                                  size=request.POST['size'])
+    basket = Basket.objects.filter(user=request.user, product=product)
+    if not basket.exists():
+        Basket.objects.create(user=request.user, product=product, quantity=1)
+    else:
+        basket = basket.first()
+        basket.quantity += 1
+        basket.save()
+
+    return HttpResponseRedirect(request.META['HTTP_REFERER'])
+
+
+def basket_remove(request, basket_id):
+    Basket.objects.get(pk=basket_id).delete()
+    return HttpResponseRedirect(request.META['HTTP_REFERER'])

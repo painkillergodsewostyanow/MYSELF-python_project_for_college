@@ -96,3 +96,9 @@ body{
 .flex-wrap :first-child{
 	margin-left: 0;
 }
+.add_to_basket{
+
+        padding: 2vw;
+        font-size:1vw;
+
+}

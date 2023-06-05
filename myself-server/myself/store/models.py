@@ -18,7 +18,7 @@ class Color(models.Model):
     normal_repr = models.CharField(max_length=50)
 
     def __str__(self):
-        return f"{self.normal_repr} {self.hex}"
+        return f"{self.normal_repr} {self.color}"
 
     class Meta:
         verbose_name = "Цвета"
@@ -70,18 +70,18 @@ class Product(models.Model):
 
     @property
     def similar(self):
-        result = Product.objects.filter(color=self.color, category=self.category)
+        result = Product.objects.filter(color=self.color, category=self.category).exclude(pk=self.pk)
         if len(result) < 4:
-            result = Product.objects.filter(color=self.color, category=self.category)
+            result = Product.objects.filter(category=self.category).exclude(pk=self.pk)
 
-        return result[0:4]
+        return result
         # TODO: in future more logical
 
     @property
     def sizes(self):
         result_lst = []
         for product in Product.objects.filter(title=self.title):
-            result_lst.append(product.size)
+            result_lst.append((product.size, product.size.pk))
 
         return result_lst
 

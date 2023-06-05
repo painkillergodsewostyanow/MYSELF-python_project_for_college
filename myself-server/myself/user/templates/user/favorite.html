@@ -6,7 +6,7 @@
     {% for favorite in object_list %}
     <div class="product_card">
         <a href="">
-            <img class="img_product" src="{{favorite.product.image.url}}" alt="">
+            <a href="{% url 'store:product_detail' favorite.product.id %}"><img class="img_product" src="{{favorite.product.image.url}}" alt=""></a>
         </a>
 				<span>{{favorite.product.title}}</span>
 				<div class="wrapp">
@@ -14,7 +14,7 @@
                     <a href="{% url 'user:del_from_favorite' favorite.id %}"><img class="add_to_favorite" src="{% static 'img/catalog/del_from_favorite.svg' %}" alt=""></a>
 				</div>
                 {% for color in favorite.product.html_colors_represent %}
-				{{color}}
+				<a href="{% url 'store:product_detail' favorite.product.id color.1 %}">{{color.0}}</a>
 				{% endfor %}
     </div>
     {% endfor %}

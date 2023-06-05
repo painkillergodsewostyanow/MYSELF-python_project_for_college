@@ -110,9 +110,21 @@ class EmailVerification(models.Model):
 class Favorite(models.Model):
     user = models.ForeignKey(to=User, on_delete=models.CASCADE)
     product = models.ForeignKey(to=Product, on_delete=models.CASCADE)
-    quantity = models.PositiveSmallIntegerField(default=0)
     create_timestamp = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return f"Избранное для {self.user.username}"
 
+
+class Basket(models.Model):
+    user = models.ForeignKey(to=User, on_delete=models.CASCADE)
+    product = models.ForeignKey(to=Product, on_delete=models.CASCADE)
+    quantity = models.PositiveSmallIntegerField(default=1)
+    create_timestamp = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Корзина для {self.user.username}"
+
+    @property
+    def total_cost(self):
+        ...
