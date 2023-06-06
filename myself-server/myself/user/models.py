@@ -6,7 +6,7 @@ from django.utils.timezone import now
 from django.urls import reverse
 from django.conf import settings
 from store.models import Product
-from django.core.mail import EmailMultiAlternatives
+import threading
 from django.template.loader import render_to_string
 
 
@@ -59,23 +59,21 @@ class Certificate(models.Model):
 
         if code == settings.USER_EMAIL_NOT_VERIFIED:
             context['todo'] = f"что бы воспользоваться сертификатом, подтвердите почту" \
-                               f"{settings.DOMAIN_NAME}{reverse('store:home')}"
+                              f"{settings.DOMAIN_NAME}{reverse('store:home')}"
 
         html_message = render_to_string('email_templates/certificate_notify.html', context)
-        send_mail(
-            subject,
-            '',
-            settings.EMAIL_HOST_USER,
-            [self.email_recipient],
-            html_message=html_message,
-            fail_silently=False
 
-        )
+        threading.Thread(target=send_mail,
+                         kwargs={
+                             'subject': subject,
+                             'message': '',
+                             'from_email': settings.EMAIL_HOST_USER,
+                             'recipient_list': [self.email_recipient],
+                             'html_message': html_message}).start()
+
         #
-        # alternative_msg = EmailMultiAlternatives(subject=subject, from_email=settings.EMAIL_HOST_USER,
-        #                                          to=[self.email_recipient])
-        # alternative_msg.attach_alternative(html_message, 'text/html')
-        # alternative_msg.send()
+        # send_mail(subject, '', settings.EMAIL_HOST_USER, [self.email_recipient], html_message=html_message)
+
         # # TODO: wait a design
 
     class Meta:
@@ -97,14 +95,16 @@ class EmailVerification(models.Model):
 
         if is_expired:
             message = f'Старая ссылка для подтверждения почты устарела, новая ссылка: {link}'
+        #
+        # send_mail(subject, message, settings.EMAIL_HOST_USER, [self.user.email])
 
-        send_mail(
-            subject,
-            message,
-            settings.EMAIL_HOST_USER,
-            [self.user.email],
-            fail_silently=False,
-        )
+        threading.Thread(target=send_mail,
+                         kwargs={
+                             'subject': subject,
+                             'message': message,
+                             'from_email': settings.EMAIL_HOST_USER,
+                             'recipient_list': [self.email_recipient],
+                             }).start()
         # TODO: wait a design
 
     def is_expired(self):

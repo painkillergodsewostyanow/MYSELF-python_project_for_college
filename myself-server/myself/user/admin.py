@@ -4,7 +4,7 @@ from user.models import User, Favorite, Certificate
 
 class FavoriteAdmin(admin.TabularInline):
     model = Favorite
-    fields = ('product', 'quantity', 'create_timestamp')
+    fields = ('product', 'create_timestamp')
     readonly_fields = ('create_timestamp', )
     extra = 0
 
@@ -14,6 +14,10 @@ class CertificateAdmin(admin.TabularInline):
     fields = ('value', 'is_used')
     readonly_fields = ('user', 'value')
     extra = 0
+
+
+class BasketAdmin(admin.TabularInline):
+    ...
 
 
 @admin.register(User)
