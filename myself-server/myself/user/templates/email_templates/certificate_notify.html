@@ -11,7 +11,13 @@
 	<div class="card">
 		<div class="header">
 			<img src="http://localhost:8000/{%static 'img/email/logo.svg' %}" alt="">
-			<div>MYSELF</div>
+			<div style="font-size:4vw; color: #C7B491">MYSELF</div>
+			<div style="font-size:2vw; color: black">На ваш адрес почты был заказан сертификат на сумму: {{value}}</div>
+			<div style="font-size:2vw; color: black">Данные заказчика:</div>
+			<div style="font-size:2vw; color: black">Почта: {{email_payer}}, Номер телефона: {{phone_payer}}</div>
+			<div style="font-size:2vw; color: black">Текст поздравления:</div>
+			<div style="font-size:1vw; color: black">{{congratulation}}</div>
+			<div style="font-size:2vw; color: black">{{todo}}</div>
 		</div>
 	</div>
 

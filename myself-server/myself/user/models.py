@@ -54,11 +54,11 @@ class Certificate(models.Model):
         }
 
         if code == settings.USER_NOT_CREATED:
-            context['todo'] = f"что бы воспользоваться сертификатом, зарегистрируйте аккаунт и " \
+            context['todo'] = f"Что бы воспользоваться сертификатом, зарегистрируйте аккаунт и " \
                               f"подтвердите почту{settings.DOMAIN_NAME}{reverse('user:reg')}"
 
         if code == settings.USER_EMAIL_NOT_VERIFIED:
-            context['todo'] = f"что бы воспользоваться сертификатом, подтвердите почту" \
+            context['todo'] = f"Что бы воспользоваться сертификатом, подтвердите почту" \
                               f"{settings.DOMAIN_NAME}{reverse('store:home')}"
 
         html_message = render_to_string('email_templates/certificate_notify.html', context)

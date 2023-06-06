@@ -32,7 +32,20 @@ class CatalogListView(ListView):
         if category_id:
             queryset = queryset.filter(category_id=category_id)
 
-        return queryset
+        return self.del_duplicate_by_name(queryset)
+
+    # TODO: плохая функция
+    @staticmethod
+    def del_duplicate_by_name(queryset):
+        product_lst = []
+        product_titles_lst = []
+        for product in queryset:
+            if product.title in product_titles_lst:
+                continue
+            product_titles_lst.append(product.title)
+            product_lst.append(product)
+
+        return product_lst
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(CatalogListView, self).get_context_data()
