@@ -5,8 +5,45 @@
     <title>Профиль</title>
 </head>
 <body>
-    <h1>{{basket}}</h1>
-    <h1>{{total_cost}}</h1>
-    <h1>{{certificate}}</h1>
+    <br>
+    <hr>
+    {% if basket %}
+    <div>
+        <span style="font-size:4vw">Корзина:</span>
+        {% for product in basket %}
+            <div style="font-size:2vw">Товар: {{product.product.title}}, Колличество: {{product.quantity}}</div>
+        {% endfor %}
+        <div style="font-size:2vw">Общая стоимость: {{total_basket_cost}}</div>
+    </div>
+    {% else %}
+    <div style="font-size:4vw">Корзина пуста</div>
+    {% endif %}
+    <br>
+    <hr>
+    {% if certificate %}
+    <div>
+        <span style="font-size:4vw">Сертификаты:</span>
+        {% for cert in certificate %}
+            <div style="font-size:2vw">Номинал: {{cert.value}}</div>
+            <div style="font-size:2vw">От: {{cert.email_payer}}</div>
+        {% endfor %}
+        <div style="font-size:2vw">Общий номинал: {{total_certificate_cost}}</div>
+    </div>
+    {% else %}
+    <div style="font-size:4vw">У вас нет сертификатов</div>
+    {% endif %}
+    <br>
+    <hr>
+    <div>
+        <div style="font-size:2vw">Имя: {{request.user.username}}</div>
+        <div style="font-size:2vw">Почта: {{request.user.email}}</div>
+        {% if request.user.is_email_verified %}
+        <div style="font-size:2vw" >Почта подтвержденна</div>
+        {% else %}
+        <div style="font-size:2vw" >Почта не подтвержденна</div>
+        {% endif %}
+    </div>
+    <br>
+    <hr>
 </body>
 </html>

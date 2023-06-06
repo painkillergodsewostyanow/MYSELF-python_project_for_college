@@ -135,7 +135,7 @@ def add_to_favorite(request, product_id):
 
 
 def del_from_favorite(request, product_id):
-    favorite = Favorite.objects.get(id=Favorite.objects.get(product=product_id).pk)
+    favorite = Favorite.objects.get(id=Favorite.objects.get(product=product_id, user=request.user).pk)
     favorite.delete()
     return HttpResponseRedirect(request.META['HTTP_REFERER'])
 
@@ -144,8 +144,9 @@ def del_from_favorite(request, product_id):
 def profile(request):
     context = {
         'basket': Basket.objects.filter(user=request.user),
-        'total_cost': Basket.total_cost(request.user),
-        'certificate': Certificate.get_certificate_by_user(request.user)
+        'total_basket_cost': Basket.total_cost(request.user),
+        'certificate': Certificate.get_certificate_by_user(request.user),
+        'total_certificate_cost': Certificate.total_cost(request.user)
     }
 
     return render(request, 'user/profile.html', context)
@@ -204,5 +205,5 @@ def basket_add(request):
 
 
 def basket_remove(request, basket_id):
-    Basket.objects.get(pk=basket_id).delete()
+    Basket.objects.get(pk=basket_id, user=request.user).delete()
     return HttpResponseRedirect(request.META['HTTP_REFERER'])

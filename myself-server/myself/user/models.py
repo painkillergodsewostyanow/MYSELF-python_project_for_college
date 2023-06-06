@@ -40,6 +40,16 @@ class Certificate(models.Model):
         return f"Сертификат номер {self.pk} для {self.name_recipient}"
 
     @staticmethod
+    def total_cost(user):
+        certificates = Certificate.objects.filter(user=user)
+        summ = 0
+        for certificate in certificates:
+            summ += certificate.value
+
+        return summ
+
+
+    @staticmethod
     def get_certificate_by_user(user):
         return Certificate.objects.filter(user=user)
 

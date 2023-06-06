@@ -32,11 +32,11 @@ class CatalogListView(ListView):
         if category_id:
             queryset = queryset.filter(category_id=category_id)
 
-        return self.del_duplicate_by_name(queryset)
+        return self.del_duplicate_by_title(queryset)
 
     # TODO: плохая функция
     @staticmethod
-    def del_duplicate_by_name(queryset):
+    def del_duplicate_by_title(queryset):
         product_lst = []
         product_titles_lst = []
         for product in queryset:
