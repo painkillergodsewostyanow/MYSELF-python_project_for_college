@@ -48,7 +48,6 @@ class Certificate(models.Model):
 
         return summ
 
-
     @staticmethod
     def get_certificate_by_user(user):
         return Certificate.objects.filter(user=user)

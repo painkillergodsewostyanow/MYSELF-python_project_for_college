@@ -32,20 +32,9 @@ class CatalogListView(ListView):
         if category_id:
             queryset = queryset.filter(category_id=category_id)
 
-        return self.del_duplicate_by_title(queryset)
+        return Product.del_duplicate_by_title(queryset)
 
     # TODO: плохая функция
-    @staticmethod
-    def del_duplicate_by_title(queryset):
-        product_lst = []
-        product_titles_lst = []
-        for product in queryset:
-            if product.title in product_titles_lst:
-                continue
-            product_titles_lst.append(product.title)
-            product_lst.append(product)
-
-        return product_lst
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(CatalogListView, self).get_context_data()
@@ -71,16 +60,18 @@ class CatalogListView(ListView):
 
         path_filter = f"Каталог{sex_str_repr}{category_str_repr}"
         title = f"Каталог {sex_str_repr}"
-
+        context['favorite'] = Favorite.get_favorite_product(user=self.request.user)
         context['title'] = title
         context['path'] = path_filter
         context['side_img'] = side_img
         return context
 
 
+# TODO: явно что то не так нужно будет хорошенько подумать на счет хранения одинаковых продуктов с разными цветами и размерами
 def product_detail(request, pk=None, color=None):
     if color:
-        product = Product.objects.get(title=Product.objects.get(pk=pk).title, color=Color.objects.get(color=color))
+        product = Product.objects.filter(title=Product.objects.get(pk=pk).title,
+                                         color=Color.objects.get(color=color)).last()
         context = {
             'product': product,
             'favorite_product': Favorite.get_favorite_product(user=request.user)

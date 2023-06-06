@@ -56,30 +56,55 @@ class Product(models.Model):
     @property
     def html_colors_represent(self):
         products = Product.objects.filter(title=self.title)
+        self.del_duplicate_by_color(products)
         result = []
-        for product in products:
+        for color in self.del_duplicate_by_color(products):
             result.append((mark_safe(f"<div style='display: inline-block;"
                                     f"margin-right: 0.2vw;"
                                     f"width: 1vw;height: 1vw;"
                                     f"-webkit-border-radius: 25px;"
                                     f"-moz-border-radius: 25px;"
                                     f"border-radius: 25px;"
-                                    f"background: {product.color.color};border:"
-                                    f" 2px solid gray;'></div>"), product.color.color))
+                                    f"background: {color};border:"
+                                    f" 2px solid gray;'></div>"), color))
         return result
+
+    # TODO: плохая функция
+    @staticmethod
+    def del_duplicate_by_color(queryset):
+        color_lst = []
+        for product in queryset:
+            if product.color.color in color_lst:
+                continue
+            color_lst.append(product.color.color)
+
+        return color_lst
 
     @property
     def similar(self):
         result = Product.objects.filter(color=self.color, category=self.category).exclude(pk=self.pk)
         if len(result) < 4:
             result = Product.objects.filter(category=self.category).exclude(pk=self.pk)
-        return result
+
+        return self.del_duplicate_by_title(result)
         # TODO: in future more logical
+
+    @staticmethod
+    def del_duplicate_by_title(queryset):
+        product_lst = []
+        product_titles_lst = []
+        for product in queryset:
+            if product.title in product_titles_lst:
+                continue
+            product_titles_lst.append(product.title)
+            product_lst.append(product)
+
+        return product_lst
 
     @property
     def sizes(self):
         result_lst = []
-        for product in Product.objects.filter(title=self.title):
+        for product in Product.objects.filter(title=self.title, color=self.color):
             result_lst.append((product.size, product.size.pk))
 
         return result_lst

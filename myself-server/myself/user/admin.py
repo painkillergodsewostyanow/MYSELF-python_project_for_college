@@ -1,5 +1,5 @@
 from django.contrib import admin
-from user.models import User, Favorite, Certificate
+from user.models import User, Favorite, Certificate, Basket
 
 
 class FavoriteAdmin(admin.TabularInline):
@@ -17,13 +17,15 @@ class CertificateAdmin(admin.TabularInline):
 
 
 class BasketAdmin(admin.TabularInline):
-    ...
+    model = Basket
+    fields = ('product', 'quantity')
+    extra = 0
 
 
 @admin.register(User)
 class UserAdmin(admin.ModelAdmin):
     list_display = ('username',)
-    inlines = (FavoriteAdmin, CertificateAdmin)
+    inlines = (FavoriteAdmin, CertificateAdmin, BasketAdmin)
 
 
 
