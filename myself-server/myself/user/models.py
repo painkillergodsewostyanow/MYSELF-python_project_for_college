@@ -103,7 +103,7 @@ class EmailVerification(models.Model):
                              'subject': subject,
                              'message': message,
                              'from_email': settings.EMAIL_HOST_USER,
-                             'recipient_list': [self.email_recipient],
+                             'recipient_list': [self.user.email],
                              }).start()
         # TODO: wait a design
 
