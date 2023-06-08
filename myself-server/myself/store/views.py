@@ -60,7 +60,10 @@ class CatalogListView(ListView):
 
         path_filter = f"Каталог{sex_str_repr}{category_str_repr}"
         title = f"Каталог {sex_str_repr}"
-        context['favorite'] = Favorite.get_favorite_product(user=self.request.user)
+
+        if self.request.user.is_authenticated:
+            context['favorite'] = Favorite.get_favorite_product(user=self.request.user)
+
         context['title'] = title
         context['path'] = path_filter
         context['side_img'] = side_img
@@ -69,20 +72,16 @@ class CatalogListView(ListView):
 
 # TODO: явно что то не так нужно будет хорошенько подумать на счет хранения одинаковых продуктов с разными цветами и размерами
 def product_detail(request, pk=None, color=None):
+    context = {}
+    favorite = Favorite.get_favorite_product(user=request.user) if request.user.is_authenticated else None
+
     if color:
         product = Product.objects.filter(title=Product.objects.get(pk=pk).title,
                                          color=Color.objects.get(color=color)).last()
-        context = {
-            'product': product,
-            'favorite_product': Favorite.get_favorite_product(user=request.user)
-        }
-
     else:
         product = Product.objects.get(pk=pk)
-        context = {
-            'product': product,
-            'favorite_product': Favorite.get_favorite_product(user=request.user)
-        }
+    context['favorite'] = favorite
+    context['product'] = product
     # TODO: сделать нормально
 
     return render(request, 'store/product_detail.html', context)
