@@ -14,6 +14,7 @@ class User(AbstractUser):
     phone_number = models.CharField(max_length=15)
     image = models.ImageField(upload_to="users_img", null=True, blank=True)
     is_email_verified = models.BooleanField(default=False)
+    email = models.EmailField(unique=True)
 
     class Meta:
         verbose_name = "Пользователи"
