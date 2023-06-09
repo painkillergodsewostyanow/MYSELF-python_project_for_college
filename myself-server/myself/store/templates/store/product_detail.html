@@ -6,6 +6,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" href="{% static 'css/slick.css' %}">
 	<link rel="stylesheet" href="{% static 'css/product_detail.css' %}">
+	<link rel="stylesheet" href="{% static 'css/catalog_style.css' %}">
 	<title>{{product.title}}</title>
 </head>
 <body>
@@ -25,8 +26,8 @@
 	<div class="cost">{{product.cost}}</div>
 
 	<div class="colors">
-		{% for color in product.html_colors_represent %}
-		<a href="{% url 'store:product_detail' product.id color.1 %}">{{color.0}}</a>
+		{% for color in product.get_colors %}
+		<a href="{% url 'store:product_detail' product.id color.color %}"><div class="circle" style="background: {{color.color}}"></div></a>
 		{% endfor %}
 		<div class="color_repr">{{product.color.normal_repr}}</div>
 	</div>
@@ -34,8 +35,8 @@
 		<form action="{% url 'user:basket_add' %}" method="POST">
 			{% csrf_token %}
 		<div class="sizes">
-			{% for size in product.sizes %}
-			<input type="radio" name="size" value="{{size.1}}"> {{size.0}}
+			{% for size in product.get_sizes %}
+			<input type="radio" name="size" value="{{size.pk}}"> {{size.name}}
 			{% endfor %}
 			<input type="hidden" name="product_id" value="{{product.id}}">
 		</div>
@@ -64,8 +65,8 @@
 							<a href="{% url 'user:add_to_favorite' similar_product.id %}"><img class="add_to_favorite" src="{% static 'img/catalog/add_to_favorite.svg' %}" alt=""></a>
 						{% endif %}
 					</div>
-					{% for color in similar_product.html_colors_represent %}
-					<a href="{% url 'store:product_detail' similar_product.id %}">{{color.0}}</a>
+					{% for color in similar_product.get_colors %}
+					<a href="{% url 'store:product_detail' similar_product.id %}"><div class="circle" style="background: {{color.color}}"></div></a>
 					{% endfor %}
 					</div>
 			</div>

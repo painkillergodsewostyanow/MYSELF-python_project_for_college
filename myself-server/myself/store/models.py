@@ -1,5 +1,15 @@
 from django.db import models
-from django.utils.safestring import mark_safe
+
+
+class ProductImages(models.Model):
+    image = models.ImageField(upload_to='product_images/%Y/%m/%d')
+
+    def __str__(self):
+        return f"Фото: {self.image}"
+
+    class Meta:
+        verbose_name = "Фото товара"
+        verbose_name_plural = "Фотографии товара"
 
 
 class ProductCategory(models.Model):
@@ -46,39 +56,26 @@ class Product(models.Model):
     image = models.ImageField(upload_to="products_title_img", verbose_name="Заголовочное фото")
     title = models.CharField(max_length=255, verbose_name="Название")
     description = models.TextField(verbose_name="Описание")
-    color = models.ForeignKey(to=Color, on_delete=models.CASCADE)
-    cost = models.DecimalField(max_digits=9, decimal_places=3, default=0)
-    category = models.ForeignKey(to=ProductCategory, on_delete=models.CASCADE)
-    sex = models.PositiveSmallIntegerField("Пол", choices=SEX)
-    size = models.ForeignKey(to=Size, default=1, on_delete=models.CASCADE)
-    quantity_in_stock = models.IntegerField(default=0, verbose_name="Количество на складе")
+    color = models.ForeignKey(to=Color, on_delete=models.CASCADE, verbose_name="Цвет")
+    cost = models.DecimalField(max_digits=9, decimal_places=3, default=0, verbose_name="Цена")
+    category = models.ForeignKey(to=ProductCategory, on_delete=models.CASCADE, verbose_name="Категория")
+    sex = models.PositiveSmallIntegerField(choices=SEX, verbose_name="Пол")
+    sizes = models.ManyToManyField(to=Size, verbose_name="Доступные размеры")
+    detail_images = models.ManyToManyField(to=ProductImages)
 
     @property
-    def html_colors_represent(self):
+    def get_sizes(self):
+        return self.sizes.all()
+
+    @property
+    def get_colors(self):
         products = Product.objects.filter(title=self.title)
-        self.del_duplicate_by_color(products)
+
         result = []
-        for color in self.del_duplicate_by_color(products):
-            result.append((mark_safe(f"<div style='display: inline-block;"
-                                    f"margin-right: 0.2vw;"
-                                    f"width: 1vw;height: 1vw;"
-                                    f"-webkit-border-radius: 25px;"
-                                    f"-moz-border-radius: 25px;"
-                                    f"border-radius: 25px;"
-                                    f"background: {color};border:"
-                                    f" 2px solid gray;'></div>"), color))
+        for product in products:
+            result.append(product.color)
+
         return result
-
-    # TODO: плохая функция
-    @staticmethod
-    def del_duplicate_by_color(queryset):
-        color_lst = []
-        for product in queryset:
-            if product.color.color in color_lst:
-                continue
-            color_lst.append(product.color.color)
-
-        return color_lst
 
     @property
     def similar(self):
@@ -93,41 +90,23 @@ class Product(models.Model):
     def del_duplicate_by_title(queryset):
         product_lst = []
         product_titles_lst = []
+
         for product in queryset:
             if product.title in product_titles_lst:
                 continue
+
             product_titles_lst.append(product.title)
             product_lst.append(product)
 
         return product_lst
 
     @property
-    def sizes(self):
-        result_lst = []
-        for product in Product.objects.filter(title=self.title, color=self.color):
-            result_lst.append((product.size, product.size.pk))
-
-        return result_lst
-
-    @property
     def product_images(self):
-        return ProductImages.objects.filter(product=self)
+        return self.detail_images.all()
 
     def __str__(self):
-        return f"Название: {self.title}, размер: {self.size}, цвет: {self.color}"
+        return f"Название: {self.title} цвет: {self.color}"
 
     class Meta:
         verbose_name = "Товар"
         verbose_name_plural = "Товары"
-
-
-class ProductImages(models.Model):
-    image = models.ImageField(upload_to='product_images/%Y/%m/%d')
-    product = models.ManyToManyField(to=Product)
-
-    def __str__(self):
-        return f"Фото: {self.image}"
-
-    class Meta:
-        verbose_name = "Фото товара"
-        verbose_name_plural = "Фотографии товара"

@@ -34,8 +34,6 @@ class CatalogListView(ListView):
 
         return Product.del_duplicate_by_title(queryset)
 
-    # TODO: плохая функция
-
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(CatalogListView, self).get_context_data()
         sex = self.kwargs.get('sex', None)
@@ -70,7 +68,6 @@ class CatalogListView(ListView):
         return context
 
 
-# TODO: явно что то не так нужно будет хорошенько подумать на счет хранения одинаковых продуктов с разными цветами и размерами
 def product_detail(request, pk=None, color=None):
     context = {}
     favorite = Favorite.get_favorite_product(user=request.user) if request.user.is_authenticated else None
@@ -80,9 +77,9 @@ def product_detail(request, pk=None, color=None):
                                          color=Color.objects.get(color=color)).last()
     else:
         product = Product.objects.get(pk=pk)
-    context['favorite'] = favorite
+
+    context['favorite_product'] = favorite
     context['product'] = product
-    # TODO: сделать нормально
 
     return render(request, 'store/product_detail.html', context)
 

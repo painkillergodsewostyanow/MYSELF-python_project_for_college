@@ -117,7 +117,7 @@ header a{
 	height: 1vw;
 	float: right;
 }
-.cercle{
+.circle{
 		display: inline-block;
 		margin-right: 0.2vw;
 	    width: 1vw;
@@ -125,7 +125,6 @@ header a{
 	    -webkit-border-radius: 25px;
 	    -moz-border-radius: 25px;
 	    border-radius: 25px;
-	    background: red;
 	    border: 2px solid gray;
 }
 .if_favorites_empty{

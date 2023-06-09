@@ -191,11 +191,10 @@ class EmailVerificationView(TemplateView):
 
 @login_required(login_url=LOGIN_URL)
 def basket_add(request):
-    product = Product.objects.get(title=Product.objects.get(pk=request.POST['product_id']).title,
-                                  size=request.POST['size'])
-    basket = Basket.objects.filter(user=request.user, product=product)
+    product = Product.objects.get(pk=request.POST['product_id'])
+    basket = Basket.objects.filter(user=request.user, product=product, size=request.POST['size'])
     if not basket.exists():
-        Basket.objects.create(user=request.user, product=product, quantity=1)
+        Basket.objects.create(user=request.user, product=product, quantity=1, size=request.POST['size'])
     else:
         basket = basket.first()
         basket.quantity += 1

@@ -11,7 +11,12 @@
     <div>
         <span style="font-size:4vw">Корзина:</span>
         {% for product in basket %}
-            <div style="font-size:2vw">Товар: {{product.product.title}}, Колличество: {{product.quantity}}</div>
+            <div style="font-size:2vw">
+                Товар: {{product.product.title}},
+                Колличество: {{product.quantity}}
+                Цвет: {{product.product.color}}
+                Размер: {{product.user_repr_size}}
+            </div>
         {% endfor %}
         <div style="font-size:2vw">Общая стоимость: {{total_basket_cost}}</div>
     </div>

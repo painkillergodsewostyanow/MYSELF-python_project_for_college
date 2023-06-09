@@ -1,9 +1,10 @@
 from django.contrib import admin
+from django.utils.safestring import mark_safe
+
 from store.models import *
 
 
-def make_copy(modeladmin, request, queryset):
-    print(queryset)
+def make_copy(model_admin, request, queryset):
     for ad in queryset:
         ad.pk = None
         ad.save()
@@ -12,15 +13,9 @@ def make_copy(modeladmin, request, queryset):
 make_copy.short_description = "Дублировать объект"
 
 
-class PhotoImagesInline(admin.TabularInline):
-    model = ProductImages.product.through
-    extra = 1
-
-
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ('title', 'size', 'quantity_in_stock', 'color', 'get_image')
-    search_fields = ('title', 'size')
-    inlines = (PhotoImagesInline, )
+    list_display = ('title', 'color', 'get_image')
+    search_fields = ('title',)
     actions = (make_copy,)
 
     def get_image(self, obj):

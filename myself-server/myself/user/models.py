@@ -5,7 +5,7 @@ from django.contrib.auth.models import AbstractUser
 from django.utils.timezone import now
 from django.urls import reverse
 from django.conf import settings
-from store.models import Product
+from store.models import Product, Size
 import threading
 from django.template.loader import render_to_string
 
@@ -141,6 +141,7 @@ class Favorite(models.Model):
 class Basket(models.Model):
     user = models.ForeignKey(to=User, on_delete=models.CASCADE)
     product = models.ForeignKey(to=Product, on_delete=models.CASCADE)
+    size = models.PositiveSmallIntegerField()
     quantity = models.PositiveSmallIntegerField(default=1)
     create_timestamp = models.DateTimeField(auto_now_add=True)
 
@@ -155,3 +156,7 @@ class Basket(models.Model):
             summ += product.product.cost
 
         return summ
+
+    @property
+    def user_repr_size(self):
+        return Size.objects.get(pk=self.size)

@@ -34,8 +34,8 @@
 							<a href="{% url 'user:add_to_favorite' product.id %}"><img class="add_to_favorite" src="{% static 'img/catalog/add_to_favorite.svg' %}" alt=""></a>
 					{% endif %}
 				</div>
-				{% for color in product.html_colors_represent %}
-				{{color.0}}
+				{% for color in product.get_colors %}
+				<div class="circle" style="background: {{color.color}}"></div>
 				{% endfor %}
 			</div>
 			{% endfor %}
