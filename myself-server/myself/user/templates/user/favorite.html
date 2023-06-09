@@ -5,16 +5,14 @@
 <div class='products_place'>
     {% for favorite in object_list %}
     <div class="product_card">
-        <a href="">
             <a href="{% url 'store:product_detail' favorite.product.id %}"><img class="img_product" src="{{favorite.product.image.url}}" alt=""></a>
-        </a>
 				<span>{{favorite.product.title}}</span>
 				<div class="wrapp">
 					<span class="price">{{favorite.product.cost}}</span>
                     <a href="{% url 'user:del_from_favorite' favorite.product.id %}"><img class="add_to_favorite" src="{% static 'img/catalog/del_from_favorite.svg' %}" alt=""></a>
 				</div>
-                {% for color in favorite.product.html_colors_represent %}
-				<a href="{% url 'store:product_detail' favorite.product.id color.1 %}">{{color.0}}</a>
+                {% for color in favorite.product.get_colors %}
+				<a href="{% url 'store:product_detail' favorite.product.id color.color %}"><div class="circle" style="background: {{color.color}}"></div></a>
 				{% endfor %}
     </div>
     {% endfor %}

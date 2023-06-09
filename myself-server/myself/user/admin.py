@@ -5,7 +5,7 @@ from user.models import User, Favorite, Certificate, Basket
 class FavoriteAdmin(admin.TabularInline):
     model = Favorite
     fields = ('product', 'create_timestamp')
-    readonly_fields = ('create_timestamp', )
+    readonly_fields = ('create_timestamp', 'product')
     extra = 0
 
 

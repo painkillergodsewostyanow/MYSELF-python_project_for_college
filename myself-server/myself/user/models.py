@@ -50,7 +50,7 @@ class Certificate(models.Model):
         return summ
 
     @staticmethod
-    def get_certificate_by_user(user):
+    def get_certificates_by_user(user):
         return Certificate.objects.filter(user=user)
 
     def send_notify_email(self, code=settings.USER_GET_CERTIFICATE):
@@ -114,7 +114,7 @@ class EmailVerification(models.Model):
                              'message': message,
                              'from_email': settings.EMAIL_HOST_USER,
                              'recipient_list': [self.user.email],
-                             }).start()
+                         }).start()
         # TODO: wait a design
 
     def is_expired(self):

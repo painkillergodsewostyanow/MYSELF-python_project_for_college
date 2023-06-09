@@ -145,7 +145,7 @@ def profile(request):
     context = {
         'basket': Basket.objects.filter(user=request.user),
         'total_basket_cost': Basket.total_cost(request.user),
-        'certificate': Certificate.get_certificate_by_user(request.user),
+        'certificate': Certificate.get_certificates_by_user(request.user),
         'total_certificate_cost': Certificate.total_cost(request.user)
     }
 
