@@ -7,7 +7,6 @@ from django.urls import reverse, reverse_lazy
 from user.forms import *
 from user.models import *
 from myself.settings import LOGIN_URL
-from store.models import Size
 
 
 class UserRegistrationView(CreateView):
@@ -204,5 +203,6 @@ def basket_add(request):
 
 
 def basket_remove(request, basket_id):
+    # TODO:
     Basket.objects.get(pk=basket_id, user=request.user).delete()
     return HttpResponseRedirect(request.META['HTTP_REFERER'])
