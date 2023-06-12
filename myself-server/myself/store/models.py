@@ -70,9 +70,9 @@ class Product(models.Model):
 
     @property
     def get_colors(self):
+        result = []
         products = Product.objects.filter(title=self.title)
 
-        result = []
         for product in products:
             result.append(product.color)
 

@@ -34,7 +34,7 @@
 						{% endif %}
 					</div>
 					{% for color in product.get_colors %}
-					<div class="circle" style="background: {{color.color}}"></div>
+						<a href="{% url 'store:product_detail' product.id color.color %}"><div class="circle" style="background: {{color.color}}"></div></a>
 					{% endfor %}
 				</div>
 				{% endfor %}

@@ -74,28 +74,18 @@ class CatalogListView(ListView):
         return context
 
 
+# TODO: fix
 def product_detail(request, pk=None, color=None):
     context = {}
     favorite = Favorite.get_favorite_product(user=request.user) if request.user.is_authenticated else None
-
-    product = cache.get('product')
-    if not product:
-        if color:
-            product = Product.objects.filter(title=Product.objects.get(pk=pk).title,
-                                            color=Color.objects.get(color=color)).last()
-        else:
-            product = Product.objects.get(pk=pk)
-
-        cache.set('product', product, 30)
-
-    similar_product = cache.get('similar_product')
-    if not similar_product:
-        similar_product = product.similar
-        cache.set('similar_product', similar_product, 30)
+    if color:
+        product = Product.objects.filter(title=Product.objects.get(pk=pk).title,
+                                         color=Color.objects.get(color=color)).last()
+    else:
+        product = Product.objects.get(pk=pk)
 
     context['favorite_product'] = favorite
     context['product'] = product
-    context['similar_product'] = similar_product
 
     return render(request, 'store/product_detail.html', context)
 
