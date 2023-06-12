@@ -1,4 +1,5 @@
 {% load static %}
+{% load cache %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,11 +13,13 @@
 <body>
 <div class="wrapper">
 	<div class="slider">
+		{% cache 30 product.product_images %}
 		{% for image in product.product_images %}
 			<div class="slide_item">
 				<img onclick="document.getElementsByClassName('mainphoto')[0].src = this.src; " src="{{image.image.url}}" alt="">
 		    </div>
 		{% endfor %}
+		{% endcache %}
     </div>
 </div>
 <div class="mainphoto-block"><img class="mainphoto" src="{{product.image.url}}" alt=""></div>
@@ -26,31 +29,36 @@
 	<div class="cost">{{product.cost}}</div>
 
 	<div class="colors">
+		{% cache 30 product.get_colors %}
 		{% for color in product.get_colors %}
 		<a href="{% url 'store:product_detail' product.id color.color %}"><div class="circle" style="background: {{color.color}}"></div></a>
 		{% endfor %}
+		{% endcache %}
+		{% cache 30 product.color.normal_repr %}
 		<div class="color_repr">{{product.color.normal_repr}}</div>
+		{% endcache %}
 	</div>
 
 		<form action="{% url 'user:basket_add' %}" method="POST">
 			{% csrf_token %}
 		<div class="sizes">
+			{% cache 30 product.get_sizes  %}
 			{% for size in product.get_sizes %}
 			<input type="radio" name="size" value="{{size.pk}}"> {{size.name}}
 			{% endfor %}
+			{% endcache %}
 			<input type="hidden" name="product_id" value="{{product.id}}">
 		</div>
 		<button class="add_to_basket" type="submit"> Добавить в карзину </button>
 		</form>
-
 </div>
-{% if product.similar %}
+{% if similar_product %}
 <div class="similar">
 	<span>ПОХОЖИЕ ТОВАРЫ</span>
 
 	<div class="similar_slider_wrapper">
 		<div class="similar_slider">
-	{% for similar_product in product.similar %}
+	{% for similar_product in similar_product %}
 			<div class="similar_slide_item">
 				<div class="product_card">
 					<a href="{% url 'store:product_detail' similar_product.id %}">
@@ -65,9 +73,11 @@
 							<a href="{% url 'user:add_to_favorite' similar_product.id %}"><img class="add_to_favorite" src="{% static 'img/catalog/add_to_favorite.svg' %}" alt=""></a>
 						{% endif %}
 					</div>
+					{% cache 30 similar_product.get_colors %}
 					{% for color in similar_product.get_colors %}
 					<a href="{% url 'store:product_detail' similar_product.id %}"><div class="circle" style="background: {{color.color}}"></div></a>
 					{% endfor %}
+					{% endcache %}
 					</div>
 			</div>
 	{% endfor %}

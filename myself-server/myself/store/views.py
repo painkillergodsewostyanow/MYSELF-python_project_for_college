@@ -5,6 +5,7 @@ from store.models import *
 from store.forms import *
 from django.views.generic.base import TemplateView
 from django.views.generic.list import ListView
+from django.core.cache import cache
 
 from user.models import Favorite
 
@@ -22,15 +23,20 @@ class CatalogListView(ListView):
     template_name = 'store/catalog.html'
 
     def get_queryset(self):
-        queryset = super(CatalogListView, self).get_queryset()
-        sex = self.kwargs.get('sex', None)
-        category_id = self.kwargs.get('category_id', None)
+        queryset = cache.get('queryset')
 
-        if sex:
-            queryset = queryset.filter(sex=sex)
+        if not queryset:
+            queryset = super(CatalogListView, self).get_queryset()
+            sex = self.kwargs.get('sex', None)
+            category_id = self.kwargs.get('category_id', None)
 
-        if category_id:
-            queryset = queryset.filter(category_id=category_id)
+            if sex:
+                queryset = queryset.filter(sex=sex)
+
+            if category_id:
+                queryset = queryset.filter(category_id=category_id)
+
+            cache.set('queryset', queryset, 30)
 
         return Product.del_duplicate_by_title(queryset)
 
@@ -72,14 +78,24 @@ def product_detail(request, pk=None, color=None):
     context = {}
     favorite = Favorite.get_favorite_product(user=request.user) if request.user.is_authenticated else None
 
-    if color:
-        product = Product.objects.filter(title=Product.objects.get(pk=pk).title,
-                                         color=Color.objects.get(color=color)).last()
-    else:
-        product = Product.objects.get(pk=pk)
+    product = cache.get('product')
+    if not product:
+        if color:
+            product = Product.objects.filter(title=Product.objects.get(pk=pk).title,
+                                            color=Color.objects.get(color=color)).last()
+        else:
+            product = Product.objects.get(pk=pk)
+
+        cache.set('product', product, 30)
+
+    similar_product = cache.get('similar_product')
+    if not similar_product:
+        similar_product = product.similar
+        cache.set('similar_product', similar_product, 30)
 
     context['favorite_product'] = favorite
     context['product'] = product
+    context['similar_product'] = similar_product
 
     return render(request, 'store/product_detail.html', context)
 

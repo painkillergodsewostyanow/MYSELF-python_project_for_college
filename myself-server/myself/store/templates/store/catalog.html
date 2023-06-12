@@ -1,5 +1,6 @@
 {% extends 'store/base_2.html' %}
 {% load static %}
+{% load cache %}
 {% block content %}
 	<div class="flex_wrap">
 		<a href=""><div class="filter_item">
@@ -17,28 +18,26 @@
 			<img src= "{{img}}" alt="">
 			{% endfor %}
 		</div>
-
-		<div class='products_place'>
-
-			{% for product in object_list %}
-			<div class="product_card">
-				<a href="{% url 'store:product_detail' product.id %}">
-				<img class="img_product" src="{{product.image.url}}" alt="">
-				</a>
-				<span>{{product.title}}</span>
-				<div class="wrapp">
-					<span class="price">{{product.cost}}</span>
-					{% if product in favorite %}
-							<a href="{% url 'user:del_from_favorite' product.id %}"><img class="add_to_favorite" src="{% static 'img/catalog/del_from_favorite.svg' %}" alt=""></a>
-					{% else %}
-							<a href="{% url 'user:add_to_favorite' product.id %}"><img class="add_to_favorite" src="{% static 'img/catalog/add_to_favorite.svg' %}" alt=""></a>
-					{% endif %}
+			<div class='products_place'>
+				{% for product in object_list %}
+				<div class="product_card">
+					<a href="{% url 'store:product_detail' product.id %}">
+					<img class="img_product" src="{{product.image.url}}" alt="">
+					</a>
+					<span>{{product.title}}</span>
+					<div class="wrapp">
+						<span class="price">{{product.cost}}</span>
+						{% if product in favorite %}
+								<a href="{% url 'user:del_from_favorite' product.id %}"><img class="add_to_favorite" src="{% static 'img/catalog/del_from_favorite.svg' %}" alt=""></a>
+						{% else %}
+								<a href="{% url 'user:add_to_favorite' product.id %}"><img class="add_to_favorite" src="{% static 'img/catalog/add_to_favorite.svg' %}" alt=""></a>
+						{% endif %}
+					</div>
+					{% for color in product.get_colors %}
+					<div class="circle" style="background: {{color.color}}"></div>
+					{% endfor %}
 				</div>
-				{% for color in product.get_colors %}
-				<div class="circle" style="background: {{color.color}}"></div>
 				{% endfor %}
 			</div>
-			{% endfor %}
-		</div>
 	</div>
 {% endblock %}
