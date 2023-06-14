@@ -19,6 +19,7 @@ from django.urls import path, include
 from django.conf.urls.static import static
 from django.views.decorators.cache import cache_page
 from store.views import *
+from django.conf import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),

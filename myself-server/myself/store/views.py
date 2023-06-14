@@ -74,7 +74,6 @@ class CatalogListView(ListView):
         return context
 
 
-# TODO: fix
 def product_detail(request, pk=None, color=None):
     context = {}
     favorite = Favorite.get_favorite_product(user=request.user) if request.user.is_authenticated else None

@@ -14,4 +14,6 @@ class ProductAdmin(admin.ModelAdmin):
     get_image.short_description = "Миниатюра"
 
 
-
+admin.site.register(Size)
+admin.site.register(ProductImages)
+admin.site.register(ProductCategory)

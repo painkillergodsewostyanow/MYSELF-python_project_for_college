@@ -6,7 +6,6 @@ from django.utils.timezone import now
 from django.urls import reverse
 from django.conf import settings
 from store.models import Product, Size
-import threading
 from django.template.loader import render_to_string
 
 
@@ -73,13 +72,13 @@ class Certificate(models.Model):
 
         html_message = render_to_string('email_templates/certificate_notify.html', context)
 
-        threading.Thread(target=send_mail,
-                         kwargs={
-                             'subject': subject,
-                             'message': '',
-                             'from_email': settings.EMAIL_HOST_USER,
-                             'recipient_list': [self.email_recipient],
-                             'html_message': html_message}).start()
+        send_mail(
+            subject=subject,
+            message='',
+            from_email=settings.EMAIL_HOST_USER,
+            recipient_list=[self.email_recipient],
+            html_message=html_message
+        )
 
         #
         # send_mail(subject, '', settings.EMAIL_HOST_USER, [self.email_recipient], html_message=html_message)
@@ -108,13 +107,12 @@ class EmailVerification(models.Model):
         #
         # send_mail(subject, message, settings.EMAIL_HOST_USER, [self.user.email])
 
-        threading.Thread(target=send_mail,
-                         kwargs={
-                             'subject': subject,
-                             'message': message,
-                             'from_email': settings.EMAIL_HOST_USER,
-                             'recipient_list': [self.user.email],
-                         }).start()
+        send_mail(
+            subject=subject,
+            message=message,
+            from_email=settings.EMAIL_HOST_USER,
+            recipient_list=[self.user.email]
+        )
         # TODO: wait a design
 
     def is_expired(self):
